@@ -669,7 +669,7 @@ def parse_inline(line) -> str:
     line = re.sub(r"~~(?P<text>([^`]*?))~~", fr"{html.S()+ r"\g<text>"}", line)
 
     # code
-    line = re.sub(r"`(?P<text>(.*?))`", fr"{html.Code()+ r"\g<text>"}", line)
+    line = re.sub(r"`(?P<text>(.*?))`", fr"{html.Mark()+ r"\g<text>"}", line)
 
     # link
     line = re.sub(

@@ -1,0 +1,19 @@
+meta :::
+    book :: Kobza
+    type :: level
+    level :: A1
+
+hero ::
+    :::
+        type :: h1
+        content :: Kobza A1
+    :::
+        type :: p
+        content :: Level A1 (Beginner) teaches to use basic grammar tenses and concepts used to talk about routine, first-hand topics.
+
+toc ::
+    :::
+        type :: h2
+        content :: Table of Contents
+    :::
+        type :: toc

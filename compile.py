@@ -1,9 +1,9 @@
-import json
 import os
 import asyncio
 
 import pyghtml as html
 
+from _modules import columnson
 from _modules import parser
 
 DATA_PATH = "." + os.path.sep
@@ -24,7 +24,7 @@ def scan(parent_folder) -> list:
             if f[:1] == "_" or f[:1] == ".":
                 continue
             path = os.path.join(folder, f)
-            if os.path.isfile(path) and f.find(".json") != -1:
+            if os.path.isfile(path) and f.find(".columnson") != -1:
                 paths.append(path.split(os.path.sep))
             elif os.path.isdir(path):
                 loop(path)
@@ -42,7 +42,8 @@ def map_pages(paths) -> dict:
 
             with open(os.path.join(*path), encoding="utf-8") as f:
                 file = f.read()
-                data = json.loads(file)
+
+            data = columnson.loads(file)
 
             grammar = data["grammar"][0]["content"] if "grammar" in data else ""
             vocabulary = (
@@ -80,7 +81,8 @@ async def compile_page(path, task_index, semaphore):
 
         with open(os.path.join(*path), encoding="utf-8") as f:
             file = f.read()
-            data = json.loads(file)
+
+        data = columnson.loads(file)
 
         meta = data["meta"]
 
@@ -109,7 +111,7 @@ async def compile_page(path, task_index, semaphore):
             case "lesson":
                 page = parser.parse_page()
             case _:
-                page = html.H1(inner_html="CHECK TYPE")
+                page = html.H1(inner_html="COMPILE ERROR")
 
         with open(os.path.join(*path[:-1], file_name), "w", encoding="utf-8") as f:
             f.write(str(html.Doctype()) + str(page))
