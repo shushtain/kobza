@@ -1,6 +1,9 @@
 import os
 import asyncio
 
+import subprocess
+import shutil
+
 import pyghtml as html
 
 from _modules import columnson
@@ -15,6 +18,26 @@ FONTS = [
     "_fonts/inter-bold-italic.woff2",
 ]
 ROOT = "/kobza/"
+
+npx_path = shutil.which("npx")
+
+
+def pretty_html(html_string):
+
+    process = subprocess.Popen(
+        [npx_path, "prettier", "--parser", "html", "--stdin"],
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
+
+    stdout, stderr = process.communicate(input=html_string.encode("utf-8"))
+
+    if process.returncode == 0:
+        return stdout.decode("utf-8")
+
+    print(f"Prettier error: {stderr.decode('utf-8')}")
+    return html_string  # Return original if formatting fails
 
 
 def scan(parent_folder) -> list:
@@ -115,8 +138,11 @@ async def compile_page(path, task_index, semaphore):
             case _:
                 page = html.H1(inner_html="COMPILE ERROR")
 
+        page_compiled = str(html.Doctype()) + str(page)
+        page_formatted = pretty_html(page_compiled)
+
         with open(os.path.join(*path[:-1], file_name), "w", encoding="utf-8") as f:
-            f.write(str(html.Doctype()) + str(page))
+            f.write(page_formatted)
 
         print(
             f"{task_index + 1}/{len(paths)}",
