@@ -5,5 +5,4 @@ Disallow: /*.columnson
 Disallow: /.vscode/
 Disallow: /.git/
 Disallow: /.mypy_cache/
-Disallow: /_fonts/
 Disallow: /_modules/
