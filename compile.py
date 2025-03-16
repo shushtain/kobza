@@ -98,7 +98,7 @@ async def compile_page(path, task_index, semaphore):
         parser.UNIT = meta["unit"].lower() if "unit" in meta else ""
         parser.LESSON = meta["lesson"].lower() if "lesson" in meta else ""
         parser.SCHEMA = meta["type"].lower() if "type" in meta else ""
-        parser.ROOT = "/".join([".." for _ in path[:-1]])
+        parser.ROOT = "/".join([".." for _ in path[:-1]])[:-1]  # ../../.
 
         file_name = "index.html"
 
