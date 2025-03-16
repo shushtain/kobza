@@ -12,10 +12,10 @@ from _modules import parser
 DATA_PATH = "." + os.path.sep
 VERSION = "25.02.04"
 FONTS = [
-    "_fonts/inter-regular.woff2",
-    "_fonts/inter-regular-italic.woff2",
-    "_fonts/inter-bold.woff2",
-    "_fonts/inter-bold-italic.woff2",
+    "fonts/inter-regular.woff2",
+    "fonts/inter-regular-italic.woff2",
+    "fonts/inter-bold.woff2",
+    "fonts/inter-bold-italic.woff2",
 ]
 ROOT = "/kobza/"
 
