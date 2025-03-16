@@ -34,7 +34,7 @@ test ::
     :::
         type :: button
         class :: test
-        content :: [Test your level](/test/)
+        content :: [Test your level](~/test)
 
 about ::
     :::

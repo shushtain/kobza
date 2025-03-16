@@ -9,11 +9,12 @@ from _modules import parser
 DATA_PATH = "." + os.path.sep
 VERSION = "25.02.04"
 FONTS = [
-    "/_fonts/inter-regular.woff2",
-    "/_fonts/inter-regular-italic.woff2",
-    "/_fonts/inter-bold.woff2",
-    "/_fonts/inter-bold-italic.woff2",
+    "_fonts/inter-regular.woff2",
+    "_fonts/inter-regular-italic.woff2",
+    "_fonts/inter-bold.woff2",
+    "_fonts/inter-bold-italic.woff2",
 ]
+ROOT = "/kobza/"
 
 
 def scan(parent_folder) -> list:
@@ -97,6 +98,7 @@ async def compile_page(path, task_index, semaphore):
         parser.UNIT = meta["unit"].lower() if "unit" in meta else ""
         parser.LESSON = meta["lesson"].lower() if "lesson" in meta else ""
         parser.SCHEMA = meta["type"].lower() if "type" in meta else ""
+        parser.ROOT = "/".join([".." for _ in path[:-1]])
 
         file_name = "index.html"
 
@@ -116,7 +118,10 @@ async def compile_page(path, task_index, semaphore):
         with open(os.path.join(*path[:-1], file_name), "w", encoding="utf-8") as f:
             f.write(str(html.Doctype()) + str(page))
 
-        print(f"{task_index + 1}/{len(paths)}", os.path.join(*path))
+        print(
+            f"{task_index + 1}/{len(paths)}",
+            "/".join(path[1:]).replace(".columnson", ""),
+        )
 
 
 async def main():

@@ -13,6 +13,7 @@ LEVEL: str = ""
 UNIT: str = ""
 LESSON: str = ""
 SCHEMA: str = ""
+ROOT: str = ""
 
 
 def parse_page():
@@ -30,7 +31,7 @@ def parse_head() -> html.Head:
     for font in FONTS:
         head += html.Link(
             rel="preload",
-            href=font,
+            href=link(ROOT, font),
             as_="font",
             type="font/woff2",
             crossorigin=True,
@@ -38,37 +39,37 @@ def parse_head() -> html.Head:
 
     head += html.Link(
         rel="preload",
-        href=f"/fonts.css?ver={VERSION}",
+        href=link(ROOT, "fonts.css?ver=", VERSION),
         as_="style",
     )
     head += html.Link(
         rel="stylesheet",
-        href=f"/fonts.css?ver={VERSION}",
+        href=link(ROOT, "fonts.css?ver=", VERSION),
     )
     head += html.Link(
         rel="stylesheet",
-        href=f"/style.css?ver={VERSION}",
+        href=link(ROOT, "style.css?ver=", VERSION),
     )
 
     head += html.Script(
-        src="/script.js",
+        src=link(ROOT, "script.js"),
         defer=True,
     )
 
     head += html.Link(
         rel="icon",
         sizes="192x192",
-        href="/android-icon-192x192.png",
+        href=link(ROOT, "android-icon-192x192.png"),
     )
     head += html.Link(
         rel="apple-touch-icon",
         sizes="180x180",
-        href="/apple-icon-180x180.png",
+        href=link(ROOT, "apple-icon-180x180.png"),
     )
     head += html.Link(
         rel="icon",
         sizes="96x96",
-        href="/favicon-96x96.png",
+        href=link(ROOT, "favicon-96x96.png"),
     )
 
     head += html.Meta(
@@ -163,7 +164,7 @@ def parse_header() -> html.Header:
 
     menu = html.Menu()
     menu += html.Li() + html.A(
-        href="/",
+        href=link(ROOT),
         class_="button logo",
         title="Home",
         inner_html=html.Span() + "Kobza",
@@ -171,7 +172,7 @@ def parse_header() -> html.Header:
 
     if SCHEMA == "lesson":
         menu += html.Li() + html.A(
-            href=f"/{LEVEL}/",
+            href=link(ROOT, LEVEL),
             class_=f"button {LEVEL}",
             inner_html=html.Span() + LEVEL.upper(),
         )
@@ -216,7 +217,7 @@ def parse_footer() -> html.Footer:
 
         if lesson_prev_index >= 0:
             lesson_prev = lessons[lesson_prev_index]
-            lesson_prev_link = f"/{LEVEL}/{"".join(lesson_prev)}/"
+            lesson_prev_link = link(ROOT, LEVEL, "".join(lesson_prev))
             lesson_prev_text = ". ".join(
                 [
                     f"Lesson {"".join(lesson_prev).upper()}",
@@ -232,7 +233,7 @@ def parse_footer() -> html.Footer:
 
         if lesson_next_index < len(lessons):
             lesson_next = lessons[lesson_next_index]
-            lesson_next_link = f"/{LEVEL}/{"".join(lesson_next)}/"
+            lesson_next_link = link(ROOT, LEVEL, "".join(lesson_next))
             lesson_next_text = ". ".join(
                 [
                     f"Lesson {"".join(lesson_next).upper()}",
@@ -247,10 +248,7 @@ def parse_footer() -> html.Footer:
             )
 
     if len(PATH) > 2:
-        path_parent = "/"
-        for breadcrumb in PATH[1:-2]:
-            path_parent += breadcrumb
-            path_parent += "/"
+        path_parent = link(ROOT, *[crumb for crumb in PATH[1:-2]])
         menu_back = html.Menu(class_="menu-back")
         menu_back += html.Li() + html.A(
             href=path_parent,
@@ -493,14 +491,24 @@ def parse_button(content, scope, class_=None, id_=None) -> html.A:
     match SCHEMA:
 
         case _:
-            inner, href_title = content[1:-1].split("](")
-            href_title_list = href_title.split('"')
 
-            button.href = href_title_list[0].strip()
-            button += html.Span() + inner
+            match = re.search(
+                r'\[(?P<text>.*?)\]\((?P<href>.*?)\s?(?:"(?P<title>.*?)")?\)', content
+            )
+            text = match.group("text")
+            href = match.group("href")
+            title = match.group("title")
+            target = "_blank"
 
-            if len(href_title_list) > 1:
-                button.title = href_title_list[1].strip()
+            if href[0] == "~":
+                href = href.rstrip("/")
+                href = link(ROOT, *href.split("/")[1:])
+                # target = ""
+
+            button.href = href
+            button.title = title
+            button.target = target
+            button += html.Span() + text
 
     return button
 
@@ -552,7 +560,7 @@ def parse_toc(content, scope, class_=None, id_=None) -> html.Div:
 
             for level in SITEMAP:
                 toc += html.Div(class_=f"card {level}") + html.A(
-                    href=f"/{level}/", inner_html=level.upper()
+                    href=link(ROOT, level), inner_html=level.upper()
                 )
 
         case "level":
@@ -561,7 +569,7 @@ def parse_toc(content, scope, class_=None, id_=None) -> html.Div:
                 ul = html.Ul()
                 for lesson, topics in lessons.items():
                     ul += html.Li() + html.A(
-                        href=f"/{LEVEL}/{unit + lesson}/",
+                        href=link(ROOT, LEVEL, unit + lesson),
                         inner_html=". ".join(
                             [f"Lesson {unit + lesson.upper()}", *topics.values()]
                         ),
@@ -617,13 +625,10 @@ def parse_matchpictures(content, scope, class_=None, id_=None) -> html.Div:
             pictures = html.Ol(class_="mp-pictures")
 
             for block in content:
-                code = block["img"].split(".")[0]
-                phrases += html.Li(class_=[code, "mp-phrase", "draggable"]) + html.Span(
+                phrases += html.Li(class_=["mp-phrase", "draggable"]) + html.Span(
                     inner_html=block["text"]
                 )
-                pictures += html.Li(class_=[code, "mp-picture"]) + html.Img(
-                    src=block["img"]
-                )
+                pictures += html.Li(class_=["mp-picture"]) + html.Img(src=block["img"])
 
             matchpictures += phrases
             matchpictures += pictures
@@ -672,11 +677,22 @@ def parse_inline(line) -> str:
     line = re.sub(r"`(?P<text>(.*?))`", fr"{html.Mark()+ r"\g<text>"}", line)
 
     # link
-    line = re.sub(
-        r'\[(?P<text>.*?)\]\((?P<href>.*?)\s?(?:"(?P<title>.*?)")?\)',
-        fr'{html.A(href=r"\g<href>", target="_blank", title=r"\g<title>") + r"\g<text>"}',
-        line,
+    pattern_link = re.compile(
+        r'\[(?P<text>.*?)\]\((?P<href>.*?)\s?(?:"(?P<title>.*?)")?\)'
     )
+    for match in pattern_link.finditer(line):
+        text = match.group("text")
+        href = match.group("href")
+        title = match.group("title")
+        target = "_blank"
+
+        if href[0] == "~":
+            href = href.rstrip("/")
+            href = link(ROOT, *href.split("/")[1:])
+            # target = ""
+
+        sub = f"{html.A(href=href, target=target, title=title) + text}"
+        line = pattern_link.sub(sub, line)
 
     return line
 
@@ -692,3 +708,23 @@ def parse_code(code) -> str:
     code = re.sub(r"  ", rf"{html.Br()}", code)
 
     return code
+
+
+def link(*parts, as_is=False):
+
+    # link raw if specified
+    if as_is:
+        return "/".join(parts)
+
+    # check if directory
+    is_directory = False
+
+    # if no file extension -> directory
+    if "." not in parts[-1]:
+        is_directory = True
+
+    # if ends on the root '..' -> directory
+    if parts[-1][-2:] == "..":
+        is_directory = True
+
+    return "/".join(parts) + ("/" if is_directory else "")
