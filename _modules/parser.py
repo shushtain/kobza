@@ -39,16 +39,16 @@ def parse_head() -> html.Head:
 
     head += html.Link(
         rel="preload",
-        href=link(ROOT, "fonts.css?ver=", VERSION),
+        href=link(ROOT, "fonts.css?ver=" + VERSION),
         as_="style",
     )
     head += html.Link(
         rel="stylesheet",
-        href=link(ROOT, "fonts.css?ver=", VERSION),
+        href=link(ROOT, "fonts.css?ver=" + VERSION),
     )
     head += html.Link(
         rel="stylesheet",
-        href=link(ROOT, "style.css?ver=", VERSION),
+        href=link(ROOT, "style.css?ver=" + VERSION),
     )
 
     head += html.Script(
