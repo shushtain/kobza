@@ -1,0 +1,67 @@
+{
+  "meta": {
+    "book": "Kobza",
+    "type": "main"
+  },
+  "hero": [
+    {
+      "type": "h1",
+      "content": "Open Source English Course"
+    },
+    {
+      "type": "p",
+      "content": "Kobza is a collection of free textbooks to help you teach ESL. Its [source files](https://github.com/shushtain/kobza) are open, so you can teach, study, and make your own versions of the course."
+    },
+    {
+      "type": "p",
+      "content": "Got questions or proposals?"
+    },
+    {
+      "type": "button",
+      "class": "mail",
+      "content": "[shushtain@gmail.com](mailto:shushtain@gmail.com)"
+    }
+  ],
+  "levels": [
+    {
+      "type": "h2",
+      "content": "Levels"
+    },
+    {
+      "type": "toc"
+    }
+  ],
+  "test": [
+    {
+      "type": "h2",
+      "content": "Level test"
+    },
+    {
+      "type": "p",
+      "content": "Feel free to use any test you like. Our levels are just like standard levels."
+    },
+    {
+      "type": "button",
+      "class": "test",
+      "content": "[Test your level](~/test)"
+    }
+  ],
+  "about": [
+    {
+      "type": "h2",
+      "content": "About Kobza"
+    },
+    {
+      "type": "p",
+      "content": "Kobza is a private voluntary initiative made under the MIT license. It means you can share these materials freely, edit them, use them for personal and commercial goals."
+    },
+    {
+      "type": "p",
+      "content": "I have studied... I somehow learned English on my own. It was frustrating. I always wanted to organize that chaos."
+    },
+    {
+      "type": "p",
+      "content": "Please be advised that there might be some errors in the functionality of the website, as well as some mistakes in the materials. You can always share your thoughts with me, but for now I build it on my own."
+    }
+  ]
+}

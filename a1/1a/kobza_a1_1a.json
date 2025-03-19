@@ -1,0 +1,246 @@
+{
+  "meta": {
+    "book": "Kobza",
+    "type": "lesson",
+    "level": "A1",
+    "unit": "1",
+    "lesson": "A"
+  },
+  "hero": [
+    {
+      "type": "h1",
+      "content": "Hello"
+    },
+    {
+      "type": "p",
+      "content": "Today we learn to introduce ourselves: greetings (`hello`), basic characteristics (`I am...`, `I am from...`), etc."
+    }
+  ],
+  "warmup": [
+    {
+      "type": "h2",
+      "content": ""
+    },
+    {
+      "type": "figure",
+      "content": {
+        "img": "",
+        "alt": "",
+        "figcaption": ""
+      }
+    },
+    {
+      "type": "quote",
+      "content": [
+        {
+          "type": "ul",
+          "content": [
+            "What information do people exchange during the first meeting?",
+            "Can you say it in English?"
+          ]
+        }
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "type": "h2",
+      "content": "Introduction"
+    },
+    {
+      "type": "flashcards",
+      "content": [
+        {
+          "q": "hello",
+          "a": "",
+          "img": ""
+        },
+        {
+          "q": "bye",
+          "a": "",
+          "img": ""
+        },
+        {
+          "q": "name",
+          "a": "",
+          "img": ""
+        },
+        {
+          "q": "surname",
+          "a": "",
+          "img": ""
+        },
+        {
+          "q": "full name",
+          "a": "name + surname",
+          "img": ""
+        },
+        {
+          "q": "British",
+          "a": "from the United Kingdom",
+          "img": ""
+        },
+        {
+          "q": "see you",
+          "a": "",
+          "img": ""
+        },
+        {
+          "q": "American",
+          "a": "from the United States",
+          "img": ""
+        },
+        {
+          "q": "7 y.o.",
+          "a": "seven years old",
+          "img": ""
+        },
+        {
+          "q": "Brazilian",
+          "a": "from Brazil",
+          "img": ""
+        },
+        {
+          "q": "Chinese",
+          "a": "from China",
+          "img": ""
+        },
+        {
+          "q": "nice to meet you",
+          "a": "",
+          "img": ""
+        }
+      ]
+    }
+  ],
+  "grammar": [
+    {
+      "type": "h2",
+      "content": "Present Simple (to be)"
+    },
+    {
+      "type": "p",
+      "content": ""
+    },
+    {
+      "type": "quote",
+      "content": ""
+    },
+    {
+      "type": "p",
+      "content": ""
+    },
+    {
+      "type": "quote",
+      "content": ""
+    }
+  ],
+  "practice": [
+    {
+      "type": "h2",
+      "content": ""
+    },
+    {
+      "type": "section",
+      "content": [
+        {
+          "type": "h3",
+          "content": "Complete the sentences."
+        },
+        {
+          "type": "fillgaps",
+          "content": [
+            "Are you a teacher? — Yes, I |am|.",
+            "|Are| we free now? — Yes, go.",
+            "I |am not| Maria. Maria is my mom.",
+            "|Are| you |not| from Brazil? — No, I'm Chilean.",
+            "How old are you? — |We| are six and seven.",
+            "|You| are so kind. Thank you!"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "content": [
+        {
+          "type": "h3",
+          "content": "Order the words to form sentences."
+        },
+        {
+          "type": "orderwords",
+          "content": [
+            "I | am | not | ten | years | old",
+            "we | are | from | the | Netherlands",
+            "you | are | my | best | friends",
+            "I | 'm | not | South | Asian",
+            "we | all | are | free | today",
+            "aren't | you | a | good | boy?"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "content": [
+        {
+          "type": "h3",
+          "content": "Find matches."
+        },
+        {
+          "type": "matchpictures",
+          "content": [
+            {
+              "text": "Hello",
+              "img": ""
+            },
+            {
+              "text": "Thank you",
+              "img": ""
+            },
+            {
+              "text": "Goodbye",
+              "img": ""
+            },
+            {
+              "text": "You are so smart",
+              "img": ""
+            },
+            {
+              "text": "How old are you?",
+              "img": ""
+            },
+            {
+              "text": "I'm a doctor",
+              "img": ""
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "break": [
+    {
+      "type": "h2",
+      "content": ""
+    }
+  ],
+  "reading": [
+    {
+      "type": "h2",
+      "content": ""
+    }
+  ],
+  "speaking": [
+    {
+      "type": "h2",
+      "content": ""
+    }
+  ],
+  "homework": [
+    {
+      "type": "h2",
+      "content": ""
+    }
+  ]
+}

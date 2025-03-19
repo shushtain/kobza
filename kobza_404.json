@@ -1,0 +1,16 @@
+{
+  "meta": {
+    "book": "Kobza",
+    "type": "404"
+  },
+  "hero": [
+    {
+      "type": "h1",
+      "content": "Error 404:  The page is not found"
+    },
+    {
+      "type": "p",
+      "content": "Have you found a broken link? Use the email below to tell us all about it."
+    }
+  ]
+}

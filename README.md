@@ -3,7 +3,7 @@
 Free and open source English (as a second language) course
 
 > ⚠️ **Pre-alpha**  
-> There are no actual lessons yet, just a functioning `JSON → HTML` parser.
+> There are no actual lessons yet, just a functioning `ColSON -> HTML` parser.
 
 ## The idea
 
@@ -25,17 +25,17 @@ As an English teacher from Ukraine, the only thing that always stopped me from w
 ## Ways to help
 
 - Supply your own lesson materials to expand the coverage.
-- Help fix mistakes (I'm only a self-taught C1 enjoyer, so...)
-- Point out where my ~~shitty~~ code is especially bad.
+- Help fix mistakes (I'm not a native speaker).
+- Point out where my code is especially bad.
 - Maybe something else?
 
-## .columnson
+## .colson
 
 I would prefer to parse lessons from the most accessible and convenient format.
 
 - General `Markdown` doesn't provide enough semantics to distinguish content.
 - `JSON` is limitless but a pain to write from scratch or read, unless there is an admin panel.
 
-For now, I've made my own [ColumnSON](https://github.com/shushtain/columnson) syntax, inspired by Python. That's what those strange files are. Essentally, they are `.txt` files parsed line-by-line into Python dictionaries which then are parsed into appropriate html elements.
+For now, I've made my own [ColSON syntax](https://github.com/shushtain/colson-vscode) and [ColSON parser](https://github.com/shushtain/colson-pip). That's what those strange files are. Essentally, they are `.txt` files parsed line-by-line into Python dictionaries which then are parsed into appropriate html elements.
 
 <!-- ## Resources -->

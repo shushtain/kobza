@@ -135,7 +135,9 @@ def parse_description() -> html.Meta:
         case "lesson":
             # content.append(f"{WEBSITE} {LEVEL.upper()}.")
             # content.append(f"Unit {UNIT}. Lesson {UNIT + LESSON.upper()}.")
-            content.append(". ".join(SITEMAP[LEVEL][UNIT][LESSON].values()))
+            grammar = SITEMAP[LEVEL][UNIT][LESSON]["grammar"]
+            vocabulary = SITEMAP[LEVEL][UNIT][LESSON]["vocabulary"]
+            content.append(". ".join([grammar, vocabulary]))
 
     description.content = sep.join(content)
 
@@ -201,8 +203,8 @@ def parse_main() -> html.Main:
 def parse_footer() -> html.Footer:
     footer = html.Footer()
     nav = html.Nav(aria_attrs={"aria-label": "Bottom"})
-    menu_back = ""
-    menu_lessons = ""
+    menu_back: html.Menu | str = ""
+    menu_lessons: html.Menu | str = ""
 
     if SCHEMA == "lesson":
         menu_lessons = html.Menu(class_="menu-lessons")
@@ -492,9 +494,11 @@ def parse_button(content, scope, class_=None, id_=None) -> html.A:
 
         case _:
 
-            match = re.search(
+            match: re.Match | None = re.search(
                 r'\[(?P<text>.*?)\]\((?P<href>.*?)\s?(?:"(?P<title>.*?)")?\)', content
             )
+            if match is None:
+                raise ValueError("Invalid button format.")
             text = match.group("text")
             href = match.group("href")
             title = match.group("title")
@@ -556,7 +560,10 @@ def parse_toc(content, scope, class_=None, id_=None) -> html.Div:
     match SCHEMA:
 
         case "main":
-            toc.class_.append("cards")
+            if isinstance(toc.class_, list):
+                toc.class_.append("cards")
+            else:
+                toc.class_ = "cards"
 
             for level in SITEMAP:
                 toc += html.Div(class_=f"card {level}") + html.A(
@@ -571,7 +578,11 @@ def parse_toc(content, scope, class_=None, id_=None) -> html.Div:
                     ul += html.Li() + html.A(
                         href=link(ROOT, LEVEL, unit + lesson),
                         inner_html=". ".join(
-                            [f"Lesson {unit + lesson.upper()}", *topics.values()]
+                            [
+                                f"Lesson {unit + lesson.upper()}",
+                                topics["grammar"],
+                                topics["vocabulary"],
+                            ]
                         ),
                     )
                 toc += html.Section() + html.H3(inner_html=f"Unit {unit}") + ul
@@ -711,6 +722,7 @@ def parse_code(code) -> str:
 
 
 def link(*parts, as_is=False):
+    """Join parts of a path and return it."""
 
     # link raw if specified
     if as_is:
