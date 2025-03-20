@@ -18,6 +18,7 @@ from _modules.utils import sort_recursively, update_version
 
 SEP = os.path.sep
 ROOT = "."  # true root is `.` to work with relative paths
+ROOT_ABS = "https://shushtain.github.io/kobza"
 FONTS_FOLDER = "fonts"
 DATA_FILES_PATTERN = r"\.colson$"
 FONT_FILES_PATTERN = r"\.woff2$"
@@ -27,6 +28,9 @@ SEMAPHORE_LIMIT = 8
 
 async def main() -> None:
     """Does everything. Hurts nobody?"""
+
+    # command line interface tab size
+    cli_tab = " " * 2
 
     # check for arguments
     args = add_args()
@@ -47,44 +51,44 @@ async def main() -> None:
             raise FileNotFoundError("npx not found. Cannot format HTML without it.")
 
     # * START FEEDBACK
-    print(
-        f"Compiling v{version}, {"formatted" if args["format"] else "minimized"}...\n"
-    )
+    if True in args.values():
+        modes = [key for key, value in args.items() if value]
+        print(f"Compiling mode: {', '.join(modes)}")
+    print(f"Compiling v{version}...\n")
 
     # find fonts
-    print("\tFinding fonts...")
+    print(f"{cli_tab}Finding fonts...")
     fonts: list = crawler.crawl(os.path.join(ROOT, FONTS_FOLDER), FONT_FILES_PATTERN)
-    for i, font in enumerate(fonts):
-        print(f"\t\t{os.path.join(*font[1:])}")
-        fonts[i] = "/".join(font[1:])  # prepare for HTML
-    print(f"\tFound {len(fonts)} fonts.\n")
+    for font in fonts:
+        print(f"{cli_tab}{cli_tab}{os.path.join(*font[1:])}")
+    print(f"{cli_tab}Found {len(fonts)} fonts.\n")
 
     # find appropriate data files
-    print("\tFinding files...")
+    print(f"{cli_tab}Finding files...")
     paths: list = crawler.crawl(ROOT, DATA_FILES_PATTERN)
     for i, path in enumerate(paths):
-        print(f"\t\t{i+1}/{len(paths)} {os.path.join(*path[1:])}")
+        print(f"{cli_tab}{cli_tab}{i+1}/{len(paths)} {os.path.join(*path[1:])}")
     if len(paths) != 0:
-        print("\tFiles found.\n")
+        print(f"{cli_tab}Files found.\n")
     else:
-        print("\tNo files found.\n")
+        print(f"{cli_tab}No files found.\n")
         print("Nothing to compile.")
         return
 
     # load data
-    print("\tGathering data...")
+    print(f"{cli_tab}Gathering data...")
     data: dict = {}
     for i, path in enumerate(paths):
         with open(os.path.join(*path), encoding="utf-8") as f:
             file = f.read()
         data[os.path.join(*path)] = colson.loads(file)
-        print(f"\t\t{i+1}/{len(paths)} {os.path.join(*path[1:])}")
-    print("\tData gathered.\n")
+        print(f"{cli_tab}{cli_tab}{i+1}/{len(paths)} {os.path.join(*path[1:])}")
+    print(f"{cli_tab}Data gathered.\n")
 
     # parse into JSON
     if args["json"]:
         ascii_mode = "ASCII" if args["ascii"] else "UTF-8"
-        print(f"\tParsing into JSON ({ascii_mode})...")
+        print(f"{cli_tab}Parsing into JSON ({ascii_mode})...")
         for i, path in enumerate(paths):
             new_file_name = re.sub(DATA_FILES_PATTERN, ".json", path[-1])
             new_path = os.path.join(*path[:-1], new_file_name)
@@ -96,16 +100,18 @@ async def main() -> None:
                         indent=2,
                     )
                 )
-            print(f"\t\t{i+1}/{len(paths)} {os.path.join(*path[1:-1], new_file_name)}")
-        print("\tParsed into JSON.\n")
+            print(
+                f"{cli_tab}{cli_tab}{i+1}/{len(paths)} {os.path.join(*path[1:-1], new_file_name)}"
+            )
+        print(f"{cli_tab}Parsed into JSON.\n")
 
     # map lessons
-    print("\tMapping lessons...")
+    print(f"{cli_tab}Mapping lessons...")
     sitemap: dict = map_lessons(data)
-    print("\tLessons mapped.\n")
+    print(f"{cli_tab}Lessons mapped.\n")
 
     # generate pages
-    print("\tGenerating pages (async)...")
+    print(f"{cli_tab}Generating pages (async)...")
 
     semaphore = asyncio.Semaphore(SEMAPHORE_LIMIT)
 
@@ -125,7 +131,9 @@ async def main() -> None:
                     npx_path=npx_path,
                 )
             )
-            print(f"\t\t{index + 1}/{total} {os.path.join(*new_path[1:])}")
+            print(
+                f"{cli_tab}{cli_tab}{index + 1}/{total} {os.path.join(*new_path[1:])}"
+            )
             return new_path
 
     tasks = [
@@ -143,7 +151,7 @@ async def main() -> None:
         for i, path in enumerate(paths)
     ]
     await asyncio.gather(*tasks)
-    print("\tPages generated.\n")
+    print(f"{cli_tab}Pages generated.\n")
 
     # * END FEEDBACK
     print("Compiled successfully.")
@@ -270,6 +278,7 @@ def generate_page(
     parser.LESSON = meta["lesson"].lower() if "lesson" in meta else ""
     parser.SCHEMA = meta["type"].lower() if "type" in meta else ""
     parser.ROOT = "/".join([".." for _ in path[:-1]])[:-1]  # ../../.
+    parser.ROOT_ABS = ROOT_ABS
 
     file_name = "index.html"
 

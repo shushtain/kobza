@@ -35,7 +35,8 @@ I would prefer to parse lessons from the most accessible and convenient format.
 
 - General `Markdown` doesn't provide enough semantics to distinguish content.
 - `JSON` is limitless but a pain to write from scratch or read, unless there is an admin panel.
+- Did not know about `YAML`, but it doesn't like inline Markdown, so still on the fence.
 
-For now, I've made my own [ColSON syntax](https://github.com/shushtain/colson-vscode) and [ColSON parser](https://github.com/shushtain/colson-pip). That's what those strange files are. Essentally, they are `.txt` files parsed line-by-line into Python dictionaries which then are parsed into appropriate html elements.
+For now, I've made my own [ColSON syntax](https://github.com/shushtain/colson-vscode) and [ColSON parser](https://github.com/shushtain/colson-pip). That's what those strange files are. Essentally, they are `.txt` files parsed line-by-line into Python objects which then are parsed into appropriate html elements by using recipes in `parser.py`.
 
 <!-- ## Resources -->

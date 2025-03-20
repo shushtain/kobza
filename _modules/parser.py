@@ -14,6 +14,7 @@ UNIT: str = ""
 LESSON: str = ""
 SCHEMA: str = ""
 ROOT: str = ""
+ROOT_ABS: str = ""
 
 
 def parse_page():
@@ -28,20 +29,59 @@ def parse_page():
 def parse_head() -> html.Head:
     head = html.Head()
 
+    # Encoding and viewport
+    head += html.CommentHtml("Encoding and viewport")
+    head += html.Meta(charset="utf-8")
+    head += html.Meta(
+        name="viewport",
+        content="width=device-width, initial-scale=1.0",
+    )
+
+    # Primary meta tags
+    head += html.CommentHtml("Primary meta tags")
+    head += parse_title()
+    head += parse_description()
+    head += html.Meta(name="author", content="Artem Shush")
+
+    # Open Graph
+    head += html.CommentHtml("Open Graph")
+    head += html.Meta(property="og:type", content="website")
+    head += html.Meta(
+        property="og:url",
+        content=link(ROOT_ABS, *PATH[1:-1]),
+    )
+    head += html.Meta(property="og:title", content=parse_title().inner_html)
+    head += html.Meta(property="og:description", content=parse_description().content)
+    head += html.Meta(
+        property="og:image",
+        content=link(ROOT_ABS, "og-image.png"),
+    )
+
+    # Use the latest IE engine
+    head += html.CommentHtml("Use the latest IE engine")
+    head += html.Meta(http_equiv="X-UA-Compatible", content="IE=edge")
+
+    # Preload fonts
+    head += html.CommentHtml("Preload fonts")
     for font in FONTS:
         head += html.Link(
             rel="preload",
-            href=link(ROOT, font),
+            href=link(ROOT, *font[1:]),
             as_="font",
             type="font/woff2",
             crossorigin=True,
         )
 
+    # Preload font styles
+    head += html.CommentHtml("Preload font styles")
     head += html.Link(
         rel="preload",
         href=link(ROOT, "fonts.css?ver=" + VERSION),
         as_="style",
     )
+
+    # Load styles
+    head += html.CommentHtml("Load styles")
     head += html.Link(
         rel="stylesheet",
         href=link(ROOT, "fonts.css?ver=" + VERSION),
@@ -51,11 +91,15 @@ def parse_head() -> html.Head:
         href=link(ROOT, "style.css?ver=" + VERSION),
     )
 
+    # Load scripts
+    head += html.CommentHtml("Load scripts")
     head += html.Script(
         src=link(ROOT, "script.js"),
         defer=True,
     )
 
+    # Add favicons
+    head += html.CommentHtml("Add favicons")
     head += html.Link(
         rel="icon",
         sizes="192x192",
@@ -72,14 +116,12 @@ def parse_head() -> html.Head:
         href=link(ROOT, "favicon-96x96.png"),
     )
 
-    head += html.Meta(
-        name="viewport",
-        content="width=device-width, initial-scale=1.0",
+    # Manifest
+    head += html.CommentHtml("Manifest")
+    head += html.Link(
+        rel="manifest",
+        href=link(ROOT, "manifest.json"),
     )
-    head += html.Meta(charset="utf-8")
-
-    head += parse_title()
-    head += parse_description()
 
     return head
 
