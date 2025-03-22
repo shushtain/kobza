@@ -1,6 +1,129 @@
+// FLASHCARDS
+class FlashcardViewer {
+  constructor(container) {
+    this.container = container;
+    this.cards = this.getCards();
+    this.currentIndex = 0;
+    this.isFlipped = false;
+
+    // Cache DOM elements
+    this.cardInner = container.querySelector(".inner");
+    this.cardFront = container.querySelector(".front");
+    this.cardBack = container.querySelector(".back");
+    this.counter = container.querySelector(".counter");
+    this.window = container.querySelector(".window");
+
+    // Bind controls
+    container.querySelector(".button.prev").addEventListener("click", (e) => {
+      e.preventDefault();
+      this.prev();
+      this.window.focus();
+    });
+    container.querySelector(".button.next").addEventListener("click", (e) => {
+      e.preventDefault();
+      this.next();
+      this.window.focus();
+    });
+    container.querySelector(".button.flip").addEventListener("click", (e) => {
+      e.preventDefault();
+      this.flip();
+      this.window.focus();
+    });
+    container
+      .querySelector(".button.restart")
+      .addEventListener("click", (e) => {
+        e.preventDefault();
+        this.restart();
+        this.window.focus();
+      });
+
+    // Add click event to window
+    this.window.addEventListener("click", (e) => {
+      e.preventDefault();
+      this.flip();
+      this.window.focus();
+    });
+
+    // Add keyboard control
+    this.window.addEventListener("keydown", (e) => {
+      if (e.code === "Space") {
+        e.preventDefault();
+        this.flip();
+      }
+      if (e.code === "ArrowRight") {
+        e.preventDefault();
+        this.next();
+      }
+      if (e.code === "ArrowLeft") {
+        e.preventDefault();
+        this.prev();
+      }
+    });
+
+    // Initialize
+    this.updateCard();
+  }
+
+  getCards() {
+    return Array.from(
+      this.container.querySelectorAll(".flashcards .flashcard")
+    ).map((card) => ({
+      question: card.querySelector("dt").textContent,
+      answer: card.querySelector("dd").textContent,
+      image: card.querySelector("img").src,
+    }));
+  }
+
+  updateCard() {
+    const card = this.cards[this.currentIndex];
+    this.cardFront.innerHTML = `
+      <img src="${card.image}" alt="">
+      <h3>${card.question}</h3>
+    `;
+    this.cardBack.innerHTML = `
+      <img src="${card.image}" alt="">
+      <p>${card.answer}</p>
+    `;
+    this.counter.textContent = `${this.currentIndex + 1}/${this.cards.length}`;
+    this.isFlipped = false;
+    this.cardInner.classList.remove("flipped");
+  }
+
+  next() {
+    if (this.currentIndex < this.cards.length - 1) {
+      this.currentIndex++;
+      this.updateCard();
+    }
+  }
+
+  prev() {
+    if (this.currentIndex > 0) {
+      this.currentIndex--;
+      this.updateCard();
+    }
+  }
+
+  flip() {
+    this.isFlipped = !this.isFlipped;
+    this.cardInner.classList.toggle("flipped");
+  }
+
+  restart() {
+    this.currentIndex = 0;
+    this.updateCard();
+  }
+}
+
+// Initialize all flashcard viewers on the page
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".flashcards-wrapper").forEach((container) => {
+    new FlashcardViewer(container);
+  });
+});
+
 // ORDERWORDS
 
-const orderwords = document.querySelectorAll(".orderwords-line");
+const orderwords = document.querySelectorAll(".ex-ow-task");
 
 orderwords.forEach((orderwordsLine) => {
   const items = orderwordsLine.querySelectorAll(".draggable");
@@ -63,15 +186,15 @@ function orderwordsCheck(line) {
   });
 
   if (currentOrder.join(",") === line.getAttribute("data-correct-order")) {
-    line.classList.add("orderwords-success");
+    line.classList.add("success");
   } else {
-    line.classList.remove("orderwords-success");
+    line.classList.remove("success");
   }
 }
 
 // MATCHPICTURES
 
-const matchpictures = document.querySelectorAll(".mp-phrases");
+const matchpictures = document.querySelectorAll(".ex-mp-task");
 
 matchpictures.forEach((matchpicture) => {
   const items = matchpicture.querySelectorAll(".draggable");
@@ -134,8 +257,8 @@ function mpCheck(line) {
   });
 
   if (currentOrder.join(",") === line.getAttribute("data-correct-order")) {
-    line.classList.add("mp-success");
+    line.classList.add("success");
   } else {
-    line.classList.remove("mp-success");
+    line.classList.remove("success");
   }
 }

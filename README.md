@@ -1,42 +1,43 @@
 # Kobza
 
-Free and open source English (as a second language) course
+A free and open-source ESL course.
 
 > ⚠️ **Pre-alpha**  
-> There are no actual lessons yet, just a functioning `ColSON -> HTML` parser.
+> Currently, there are no actual lessons, only a functioning parser.
 
-## The idea
+## The Idea
 
-Let's make a free and open source English course happen, to make it easier for teachers.
+Let's create a free and open-source English course to support teachers.
 
-As an English teacher from Ukraine, the only thing that always stopped me from working independently is the absence of my own teaching materials. Even official private schools often buy a single book to teach hundreds of students, which is pirating. So-called "multimedia solutions" basically offer interactive wrappers on top of regular page scans.
+As an English teacher from Ukraine, the main obstacle to working independently has always been the lack of teaching materials. Even official private schools often purchase a single book to teach hundreds of students, which constitutes piracy. So-called "multimedia solutions" essentially offer interactive wrappers around regular page scans.
 
-> 💅 Kobza is a Ukrainian musical instrument, a prototype of Bandura.
+> Kobza is a Ukrainian musical instrument, a predecessor of Bandura.  
+> The name should be fitting for a sound but humble project.
 
-## Features and goals
+## Features and Goals
 
-- [x] Parse JSON lessons into web pages.
-- [x] Interactive exercises.
-- [ ] Proper styling.
-- [ ] Vocabulary flashcards.
-- [ ] Interactive tests.
-- [ ] Warmup activities.
+- [x] Parse JSON lessons into web pages
+- [x] Interactive exercises
+- [ ] Proper styling
+- [ ] Vocabulary flashcards
+- [ ] Interactive tests
+- [ ] Warmup activities
 
-## Ways to help
+## Ways to Help
 
-- Supply your own lesson materials to expand the coverage.
-- Help fix mistakes (I'm not a native speaker).
-- Point out where my code is especially bad.
-- Maybe something else?
+- Contribute lesson materials to expand the coverage
+- Help correct mistakes (I'm not a native speaker)
+- Suggest code improvements
+- Something else?..
 
 ## .colson
 
-I would prefer to parse lessons from the most accessible and convenient format.
+I aim to parse lessons from the most accessible and convenient format.
 
-- General `Markdown` doesn't provide enough semantics to distinguish content.
-- `JSON` is limitless but a pain to write from scratch or read, unless there is an admin panel.
-- Did not know about `YAML`, but it doesn't like inline Markdown, so still on the fence.
+- Standard `Markdown` doesn't provide enough semantics to distinguish content.
+- `JSON` is versatile but difficult to write from scratch or read without an admin panel.
+- `YAML` doesn't handle inline Markdown well.
 
-For now, I've made my own [ColSON syntax](https://github.com/shushtain/colson-vscode) and [ColSON parser](https://github.com/shushtain/colson-pip). That's what those strange files are. Essentally, they are `.txt` files parsed line-by-line into Python objects which then are parsed into appropriate html elements by using recipes in `parser.py`.
+For now, I've developed my own [ColSON syntax](https://github.com/shushtain/colson-vscode) and [ColSON parser](https://github.com/shushtain/colson-pip). These handle the special files you might have spotted in the repository. They are essentially `.txt` files parsed line-by-line into Python objects, which are then converted into appropriate HTML elements using recipes in `parser.py`.
 
 <!-- ## Resources -->

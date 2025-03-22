@@ -67,28 +67,24 @@
     <link rel="manifest" href=".././manifest.json" />
   </head>
   <body>
-    <header class="a1">
-      <nav aria-label="Main">
-        <a href="#main" class="button skip"><span>Skip to content</span></a>
-        <menu>
-          <li>
-            <a href="../." title="Home" class="button logo"
-              ><span>Kobza</span></a
-            >
-          </li>
-        </menu>
+    <header>
+      <nav aria-label="Primary">
+        <a href="#main" class="button tile skip"><span>Skip to content</span></a
+        ><a href="../." class="button tile accent" aria-label="Kobza Home"
+          ><span>Kobza</span></a
+        >
       </nav>
     </header>
-    <main id="main" class="a1">
+    <main id="main">
       <section id="hero">
-        <h1>Kobza A1</h1>
-        <p>
+        <h1 class="">Kobza A1</h1>
+        <p class="">
           Level A1 (Beginner) teaches to use basic grammar tenses and concepts
           used to talk about routine, first-hand topics.
         </p>
       </section>
       <section id="toc">
-        <h2>Table of Contents</h2>
+        <h2 class="">Table of Contents</h2>
         <div id="toc-level" class="toc">
           <section>
             <h3>Unit 1</h3>
@@ -104,23 +100,14 @@
       </section>
     </main>
     <footer>
-      <nav aria-label="Bottom">
-        <menu class="menu-back">
-          <li>
-            <a href="../." class="button back"><span>Back</span></a>
-          </li>
-        </menu>
-        <menu class="menu-contacts">
-          <li>
-            <a
-              target="_blank"
-              href="mailto:shushtain@gmail.com"
-              class="button mail"
-              ><span>shushtain@gmail.com</span></a
-            >
-          </li>
-        </menu>
+      <nav class="back" aria-label="Back">
+        <a href="../." class="button tile back"><span>Back</span></a>
       </nav>
+      <div class="author">
+        <a href="https://github.com/shushtain/kobza" class="inline subtle"
+          ><small>@Kobza</small></a
+        >
+      </div>
     </footer>
   </body>
 </html>

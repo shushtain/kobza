@@ -197,38 +197,36 @@ def parse_body() -> html.Body:
 
 
 def parse_header() -> html.Header:
-    header = html.Header(class_=LEVEL)
+    header = html.Header()
 
-    nav = html.Nav(aria_attrs={"aria-label": "Main"})
+    nav = html.Nav(aria_attrs={"aria-label": "Primary"})
     nav += html.A(
         href="#main",
-        class_="button skip",
+        class_=["button", "tile", "skip"],
         inner_html=html.Span() + "Skip to content",
     )
 
-    menu = html.Menu()
-    menu += html.Li() + html.A(
+    nav += html.A(
         href=link(ROOT),
-        class_="button logo",
-        title="Home",
+        class_=["button", "tile", "accent"],
+        aria_attrs={"aria-label": "Kobza Home"},
         inner_html=html.Span() + "Kobza",
     )
 
     if SCHEMA == "lesson":
-        menu += html.Li() + html.A(
+        nav += html.A(
             href=link(ROOT, LEVEL),
-            class_=f"button {LEVEL}",
+            class_=["button", "tile", "tone"],
             inner_html=html.Span() + LEVEL.upper(),
         )
 
-    nav += menu
     header += nav
 
     return header
 
 
 def parse_main() -> html.Main:
-    main = html.Main(id="main", class_=LEVEL)
+    main = html.Main(id="main")
 
     for key, value in DATA.items():
 
@@ -244,12 +242,10 @@ def parse_main() -> html.Main:
 
 def parse_footer() -> html.Footer:
     footer = html.Footer()
-    nav = html.Nav(aria_attrs={"aria-label": "Bottom"})
-    menu_back: html.Menu | str = ""
-    menu_lessons: html.Menu | str = ""
 
+    # Lessons navigation
     if SCHEMA == "lesson":
-        menu_lessons = html.Menu(class_="menu-lessons")
+        nav_lessons = html.Nav(class_=["lessons"], aria_attrs={"aria-label": "Lessons"})
 
         lessons: list = []
         for unit in SITEMAP[LEVEL]:
@@ -269,9 +265,10 @@ def parse_footer() -> html.Footer:
                     SITEMAP[LEVEL][lesson_prev[0]][lesson_prev[1]]["vocabulary"],
                 ]
             )
-            menu_lessons += html.Li() + html.A(
+            nav_lessons += html.A(
                 href=lesson_prev_link,
-                class_="button lesson-prev",
+                class_=["button", "tile", "prev"],
+                aria_attrs={"aria-label": "Previous lesson"},
                 inner_html=html.Span() + lesson_prev_text,
             )
 
@@ -285,33 +282,35 @@ def parse_footer() -> html.Footer:
                     SITEMAP[LEVEL][lesson_next[0]][lesson_next[1]]["vocabulary"],
                 ]
             )
-            menu_lessons += html.Li() + html.A(
+            nav_lessons += html.A(
                 href=lesson_next_link,
-                class_="button lesson-next",
+                class_=["button", "tile", "next"],
+                aria_attrs={"aria-label": "Next lesson"},
                 inner_html=html.Span() + lesson_next_text,
             )
 
+        footer += nav_lessons
+
+    # Back navigation
     if len(PATH) > 2:
         path_parent = link(ROOT, *[crumb for crumb in PATH[1:-2]])
-        menu_back = html.Menu(class_="menu-back")
-        menu_back += html.Li() + html.A(
+
+        nav_back = html.Nav(class_=["back"], aria_attrs={"aria-label": "Back"})
+        nav_back += html.A(
             href=path_parent,
-            class_="button back",
+            class_=["button", "tile", "back"],
             inner_html=html.Span() + "Back",
         )
 
-    menu_contacts = html.Menu(class_="menu-contacts")
-    menu_contacts += html.Li() + html.A(
-        href="mailto:shushtain@gmail.com",
-        class_="button mail",
-        target="_blank",
-        inner_html=html.Span() + "shushtain@gmail.com",
-    )
+        footer += nav_back
 
-    nav += menu_lessons
-    nav += menu_back
-    nav += menu_contacts
-    footer += nav
+    # Contacts
+    footer += html.Div(class_=["author"]) + html.A(
+        href="https://github.com/shushtain/kobza",
+        class_=["inline", "subtle"],
+        inner_html=html.Small()
+        + "@Kobza",  # Changed from having 'small' in class to using Small()
+    )
 
     return footer
 
@@ -369,7 +368,6 @@ def parse_block(block, scope):
                 return parse_orderwords(content, scope, class_, id_)
             case "matchpictures":
                 return parse_matchpictures(content, scope, class_, id_)
-
             case _:
                 return html.CommentHtml() + content
 
@@ -377,29 +375,19 @@ def parse_block(block, scope):
 
 
 def parse_section(content, scope, class_=None, id_=None) -> html.Section:
-    section = html.Section(class_=class_, id=id_)
-
-    match SCHEMA:
-
-        case _:
-            section += parse_block(content, section)
-
+    section = html.Section(class_=[class_], id=id_)
+    section += parse_block(content, section)
     return section
 
 
 def parse_div(content, scope, class_=None, id_=None) -> html.Div:
-    div = html.Div(class_=class_, id=id_)
-
-    match SCHEMA:
-
-        case _:
-            div += parse_block(content, div)
-
+    div = html.Div(class_=[class_], id=id_)
+    div += parse_block(content, div)
     return div
 
 
 def parse_h1(content, scope, class_=None, id_=None) -> html.H1:
-    h1 = html.H1(class_=class_, id=id_)
+    h1 = html.H1(class_=[class_], id=id_)
 
     match SCHEMA:
 
@@ -415,7 +403,7 @@ def parse_h1(content, scope, class_=None, id_=None) -> html.H1:
 
 
 def parse_h2(content, scope, class_=None, id_=None) -> html.H2:
-    h2 = html.H2(class_=class_, id=id_)
+    h2 = html.H2(class_=[class_], id=id_)
 
     match SCHEMA:
 
@@ -436,161 +424,157 @@ def parse_h2(content, scope, class_=None, id_=None) -> html.H2:
 
 
 def parse_h3(content, scope, class_=None, id_=None) -> html.H3:
-    h3 = html.H3(class_=class_, id=id_)
-
-    match SCHEMA:
-
-        case _:
-            h3 += parse_block(content, h3)
-
+    h3 = html.H3(class_=[class_], id=id_)
+    h3 += parse_block(content, h3)
     return h3
 
 
 def parse_h4(content, scope, class_=None, id_=None) -> html.H4:
-    h4 = html.H4(class_=class_, id=id_)
-
-    match SCHEMA:
-
-        case _:
-            h4 += parse_block(content, h4)
-
+    h4 = html.H4(class_=[class_], id=id_)
+    h4 += parse_block(content, h4)
     return h4
 
 
 def parse_h5(content, scope, class_=None, id_=None) -> html.H5:
-    h5 = html.H5(class_=class_, id=id_)
-
-    match SCHEMA:
-
-        case _:
-            h5 += parse_block(content, h5)
-
+    h5 = html.H5(class_=[class_], id=id_)
+    h5 += parse_block(content, h5)
     return h5
 
 
 def parse_h6(content, scope, class_=None, id_=None) -> html.H6:
-    h6 = html.H6(class_=class_, id=id_)
-
-    match SCHEMA:
-
-        case _:
-            h6 += parse_block(content, h6)
-
+    h6 = html.H6(class_=[class_], id=id_)
+    h6 += parse_block(content, h6)
     return h6
 
 
 def parse_p(content, scope, class_=None, id_=None) -> html.P:
-    p = html.P(class_=class_, id=id_)
-
-    match SCHEMA:
-
-        case _:
-            p += parse_block(content, p)
-
+    p = html.P(class_=[class_], id=id_)
+    p += parse_block(content, p)
     return p
 
 
 def parse_ul(content, scope, class_=None, id_=None) -> html.Ul:
-    ul = html.Ul(class_=class_, id=id_)
+    ul = html.Ul(class_=[class_], id=id_)
 
     for item in content:
-
-        match SCHEMA:
-
-            case _:
-                li = html.Li()
-                ul += li + parse_block(item, li)
+        li = html.Li()
+        ul += li + parse_block(item, li)
 
     return ul
 
 
 def parse_ol(content, scope, class_=None, id_=None) -> html.Ol:
-    ol = html.Ol(class_=class_, id=id_)
+    ol = html.Ol(class_=[class_], id=id_)
 
     for item in content:
-
-        match SCHEMA:
-
-            case _:
-                li = html.Li()
-                ol += li + parse_block(item, li)
+        li = html.Li()
+        ol += li + parse_block(item, li)
 
     return ol
 
 
 def parse_blockquote(content, scope, class_=None, id_=None) -> html.Blockquote:
-    blockquote = html.Blockquote(class_=class_, id=id_)
-
-    match SCHEMA:
-
-        case _:
-            blockquote += parse_block(content, blockquote)
-
+    blockquote = html.Blockquote(class_=[class_, "area"], id=id_)
+    blockquote += parse_block(content, blockquote)
     return blockquote
 
 
 def parse_button(content, scope, class_=None, id_=None) -> html.A:
-    button = html.A(class_=["button", class_], id=id_)
+    button = html.A(class_=["button", "tile", class_], id=id_)
 
-    match SCHEMA:
+    match: re.Match | None = re.search(
+        r'\[(?P<text>.*?)\]\((?P<href>.*?)\s?(?:"(?P<title>.*?)")?\)', content
+    )
+    if match is None:
+        raise ValueError("Invalid button format.")
+    text = match.group("text")
+    href = match.group("href")
+    title = match.group("title")
+    target = "_blank"
 
-        case _:
+    if href[0] == "~":
+        href = href.rstrip("/")
+        href = link(ROOT, *href.split("/")[1:])
 
-            match: re.Match | None = re.search(
-                r'\[(?P<text>.*?)\]\((?P<href>.*?)\s?(?:"(?P<title>.*?)")?\)', content
-            )
-            if match is None:
-                raise ValueError("Invalid button format.")
-            text = match.group("text")
-            href = match.group("href")
-            title = match.group("title")
-            target = "_blank"
-
-            if href[0] == "~":
-                href = href.rstrip("/")
-                href = link(ROOT, *href.split("/")[1:])
-                # target = ""
-
-            button.href = href
-            button.title = title
-            button.target = target
-            button += html.Span() + text
+    button.href = href
+    button.title = title
+    button.target = target
+    button += html.Span() + text
 
     return button
 
 
 def parse_figure(content, scope, class_=None, id_=None) -> html.Figure:
-    figure = html.Figure(class_=class_, id=id_)
+    figure = html.Figure(class_=[class_], id=id_)
 
     src = content["img"]
     alt = content["alt"]
     figcaption = parse_inline(content["figcaption"])
 
-    match SCHEMA:
-
-        case _:
-            figure += html.Img(src=src, alt=alt)
-            figure += html.Figcaption() + figcaption
+    figure += html.Img(src=src, alt=alt)
+    figure += html.Figcaption(class_=["subtle"]) + figcaption
 
     return figure
 
 
 def parse_flashcards(content, scope, class_=None, id_=None) -> html.Div:
-    flashcards = html.Div(class_=["flashcards", class_], id=id_)
+    flashcards = html.Div(class_=["flashcards-wrapper", class_], id=id_)
+
+    # main viewer
+    viewer = html.Div(class_=["flashcards-viewer"])
+    flashcards += viewer
+
+    # viewer header
+    viewer_header = html.Div(class_=["header"])
+    viewer_header += html.Button(class_=["restart", "button", "tile"]) + (
+        html.Span() + "Restart"
+    )
+    viewer_header += (
+        html.Div(class_=["counter", "subtle", "small"])
+        + (html.Span(class_=["current"]) + "0")
+        + "/"
+        + (html.Span(class_=["total"]) + len(content))
+    )
+    viewer += viewer_header
+
+    # viewer window
+    viewer_window = html.Div(class_=["window", "tile"], tabindex="0")
+    card_inner = html.Div(class_=["inner", "area"])
+    card_inner += html.Div(class_=["front"])
+    card_inner += html.Div(class_=["back"])
+    viewer_window += card_inner
+    viewer += viewer_window
+
+    # viewer footer
+    viewer_footer = html.Div(class_=["footer"])
+    viewer_footer += html.Button(class_=["prev", "button", "tile"]) + (
+        html.Span() + "Prev"
+    )
+    viewer_footer += html.Button(class_=["flip", "button", "tile"]) + (
+        html.Span() + "Flip"
+    )
+    viewer_footer += html.Button(class_=["next", "button", "tile"]) + (
+        html.Span() + "Next"
+    )
+    viewer += viewer_footer
+
+    # all cards
+    all_cards = html.Details(class_=["flashcards-all"])
+    all_cards += html.Summary(class_=["button", "tile"]) + "All cards"
+    cards = html.Div(class_=["flashcards"])
 
     for item in content:
+        card = html.Div(class_=["flashcard", "area"])
+        card += html.Img(src=item["img"], alt="")
+        card += (
+            html.Dl()
+            + html.Dt(inner_html=parse_inline(item["q"]))
+            + html.Dd(inner_html=parse_inline(item["a"]))
+        )
+        cards += card
 
-        match SCHEMA:
-
-            case _:
-                card = html.Div(class_="flashcard")
-                card += html.Img(src=item["img"])
-                card += (
-                    html.Div(class_="flashcard-text")
-                    + html.P(class_="flashcard-q", inner_html=parse_inline(item["q"]))
-                    + html.P(class_="flashcard-a", inner_html=parse_inline(item["a"]))
-                )
-                flashcards += card
+    all_cards += cards
+    flashcards += all_cards
 
     return flashcards
 
@@ -608,12 +592,11 @@ def parse_toc(content, scope, class_=None, id_=None) -> html.Div:
                 toc.class_ = "cards"
 
             for level in SITEMAP:
-                toc += html.Div(class_=f"card {level}") + html.A(
+                toc += html.Div(class_=["card", "tile", "accent", level]) + html.A(
                     href=link(ROOT, level), inner_html=level.upper()
                 )
 
         case "level":
-
             for unit, lessons in SITEMAP[LEVEL].items():
                 ul = html.Ul()
                 for lesson, topics in lessons.items():
@@ -632,59 +615,53 @@ def parse_toc(content, scope, class_=None, id_=None) -> html.Div:
     return toc
 
 
-def parse_fillgaps(content, scope, class_=None, id_=None) -> html.Ol:
-    fillgaps = html.Ol(class_=["fillgaps", class_], id=id_)
+def parse_fillgaps(content, scope, class_=None, id_=None) -> html.Div:
+    fillgaps = html.Div(class_=["ex-fg", class_], id=id_)
+    tasks = html.Ol()
 
-    match SCHEMA:
+    for line in content:
+        task = html.Li(class_=["task", "ex-fg-task"])
+        elems = line.split("|")
+        for i, elem in enumerate(elems):
+            if i % 2 == 0:
+                task += elem
+            else:
+                task += html.Span(class_=["tile"], tabindex="0") + elem.strip()
+        tasks += task
 
-        case _:
-            for line in content:
-                task = html.Li()
-                elems = line.split("|")
-                for i, elem in enumerate(elems):
-                    if i % 2 == 0:
-                        task += elem
-                    else:
-                        span = html.Span() + elem.strip()
-                        task += html.Label() + html.Input(type="checkbox") + span
-                fillgaps += task
-
+    fillgaps += tasks
     return fillgaps
 
 
-def parse_orderwords(content, scope, class_=None, id_=None) -> html.Ol:
-    orderwords = html.Ol(class_=["orderwords", class_], id=id_)
+def parse_orderwords(content, scope, class_=None, id_=None) -> html.Div:
+    orderwords = html.Div(class_=["ex-ow", class_], id=id_)
+    tasks = html.Ol()
 
-    match SCHEMA:
+    for line in content:
+        task = html.Li(class_=["task", "ex-ow-task"])
+        elems = line.split("|")
+        for elem in elems:
+            task += html.Span(class_=["tile", "draggable"], tabindex="0") + elem.strip()
+        tasks += task
 
-        case _:
-            for line in content:
-                task = html.Li(class_="orderwords-line")
-                elems = line.split("|")
-                for elem in elems:
-                    task += html.Span(class_="draggable") + elem.strip()
-                orderwords += task
-
+    orderwords += tasks
     return orderwords
 
 
 def parse_matchpictures(content, scope, class_=None, id_=None) -> html.Div:
-    matchpictures = html.Div(class_=["matchpictures", class_], id=id_)
+    matchpictures = html.Div(class_=["ex-mp", class_], id=id_)
 
-    match SCHEMA:
+    phrases = html.Ol(class_=["task", "ex-mp-task"])
+    pictures = html.Ol(class_=["ex-mp-ref"])
 
-        case _:
-            phrases = html.Ol(class_="mp-phrases")
-            pictures = html.Ol(class_="mp-pictures")
+    for block in content:
+        phrases += html.Li(class_=["draggable"], tabindex="0") + html.Span(
+            class_=["tile"], inner_html=block["text"]
+        )
+        pictures += html.Li(class_=["ex-mp-ref-item"]) + html.Img(src=block["img"])
 
-            for block in content:
-                phrases += html.Li(class_=["mp-phrase", "draggable"]) + html.Span(
-                    inner_html=block["text"]
-                )
-                pictures += html.Li(class_=["mp-picture"]) + html.Img(src=block["img"])
-
-            matchpictures += phrases
-            matchpictures += pictures
+    matchpictures += phrases
+    matchpictures += pictures
 
     return matchpictures
 
@@ -744,7 +721,7 @@ def parse_inline(line) -> str:
             href = link(ROOT, *href.split("/")[1:])
             # target = ""
 
-        sub = f"{html.A(href=href, target=target, title=title) + text}"
+        sub = f"{html.A(class_="inline", href=href, target=target, title=title) + text}"
         line = pattern_link.sub(sub, line)
 
     return line

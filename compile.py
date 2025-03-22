@@ -54,6 +54,8 @@ async def main() -> None:
     if True in args.values():
         modes = [key for key, value in args.items() if value]
         print(f"Compiling mode: {', '.join(modes)}")
+    if args["dir"] is not None:
+        print(f"Directory focus: {args['dir']}")
     print(f"Compiling v{version}...\n")
 
     # find fonts
@@ -66,6 +68,13 @@ async def main() -> None:
     # find appropriate data files
     print(f"{cli_tab}Finding files...")
     paths: list = crawler.crawl(ROOT, DATA_FILES_PATTERN)
+    # filter by directory if needed
+    if args["dir"] is not None:
+        new_paths = []
+        for path in paths:
+            if len(path) == 2 or args["dir"] in path:
+                new_paths.append(path)
+        paths = new_paths
     for i, path in enumerate(paths):
         print(f"{cli_tab}{cli_tab}{i+1}/{len(paths)} {os.path.join(*path[1:])}")
     if len(paths) != 0:
@@ -205,6 +214,13 @@ def add_args() -> dict:
         help="Increment the major version.",
     )
 
+    arg_parser.add_argument(
+        "-d",
+        "--dir",
+        type=str,
+        help="Compile a specific subdirectory. Includes root files.",
+    )
+
     arg_parsed = arg_parser.parse_args()
 
     args: dict = {}
@@ -214,6 +230,7 @@ def add_args() -> dict:
     args["patch"] = arg_parsed.patch
     args["minor"] = arg_parsed.minor
     args["major"] = arg_parsed.major
+    args["dir"] = arg_parsed.dir
     return args
 
 
