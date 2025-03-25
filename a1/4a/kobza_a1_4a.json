@@ -31,8 +31,8 @@
     {
       "type": "ul",
       "content": [
-        "What events do you see?  When did you have them?",
-        "What life experiences do you see?  Have you ever had them?"
+        "What events do you see? When did you have them?",
+        "What life experiences do you see? Have you ever had them?"
       ]
     }
   ],
@@ -52,12 +52,12 @@
         {
           "q": "yet",
           "a": "used in questions and negatives about recent events",
-          "img": ""
+          "img": "hello.jpg"
         },
         {
           "q": "just",
           "a": "very recently, a moment ago",
-          "img": ""
+          "img": "hello.jpg"
         },
         {
           "q": "ever",
@@ -67,17 +67,17 @@
         {
           "q": "never",
           "a": "at no time, not ever",
-          "img": ""
+          "img": "hello.jpg"
         },
         {
           "q": "lately",
           "a": "recently, in the recent past",
-          "img": ""
+          "img": "hello.jpg"
         },
         {
           "q": "since",
           "a": "from a specific point in time until now",
-          "img": ""
+          "img": "hello.jpg"
         },
         {
           "q": "for",
@@ -144,7 +144,7 @@
         },
         {
           "type": "aside",
-          "class": "example",
+          "class": "success",
           "content": [
             {
               "type": "ul",
@@ -192,7 +192,7 @@
         },
         {
           "type": "aside",
-          "class": "example",
+          "class": "error",
           "content": [
             {
               "type": "ul",
@@ -257,24 +257,21 @@
       ]
     },
     {
-      "type": "aside",
-      "class": "attention",
+      "type": "---"
+    },
+    {
+      "type": "ul",
       "content": [
-        {
-          "type": "ul",
-          "content": [
-            "When did Sarah start her career in tech?",
-            "When did she decide to change her career?",
-            "What did she decide to do?",
-            "When did she complete her certification?",
-            "When did she have her first interview?",
-            "Has she found a teaching position yet?",
-            "Has she met other professionals who have made similar career changes?",
-            "When did some of them switch to teaching?",
-            "How did they feel about their decision?",
-            "Has Sarah regretted her choice?"
-          ]
-        }
+        "When did Sarah start her career in tech?",
+        "When did she decide to change her career?",
+        "What did she decide to do?",
+        "When did she complete her certification?",
+        "When did she have her first interview?",
+        "Has she found a teaching position yet?",
+        "Has she met other professionals who have made similar career changes?",
+        "When did some of them switch to teaching?",
+        "How did they feel about their decision?",
+        "Has Sarah regretted her choice?"
       ]
     }
   ],

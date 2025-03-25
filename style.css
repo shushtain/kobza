@@ -158,27 +158,27 @@ ROOT
     --_sw-n-99: #fcfcfc;
 
     /* primary swatches */
-    --_sw-p-01: #060103;
-    --_sw-p-05: #1d050d;
-    --_sw-p-10: #380a1a;
-    --_sw-p-15: #521026;
-    --_sw-p-20: #6a1733;
-    --_sw-p-25: #801f40;
-    --_sw-p-30: #94284d;
-    --_sw-p-35: #a73259;
-    --_sw-p-40: #b83c66;
-    --_sw-p-45: #c74873;
-    --_sw-p-50: #d55480;
-    --_sw-p-55: #e1618c;
-    --_sw-p-60: #eb6f99;
-    --_sw-p-65: #f27ba3;
-    --_sw-p-70: #f98bb0;
-    --_sw-p-75: #fd98ba;
-    --_sw-p-80: #ffa9c7;
-    --_sw-p-85: #ffbbd4;
-    --_sw-p-90: #ffd2e3;
-    --_sw-p-95: #ffe6f0;
-    --_sw-p-99: #fffbfc;
+    --_sw-p-01: #060102;
+    --_sw-p-05: #1d0508;
+    --_sw-p-10: #380c11;
+    --_sw-p-15: #51131a;
+    --_sw-p-20: #691b23;
+    --_sw-p-25: #7f232d;
+    --_sw-p-30: #932c38;
+    --_sw-p-35: #a63643;
+    --_sw-p-40: #b7414f;
+    --_sw-p-45: #c64d5b;
+    --_sw-p-50: #d45967;
+    --_sw-p-55: #e06674;
+    --_sw-p-60: #ea7482;
+    --_sw-p-65: #f1808d;
+    --_sw-p-70: #f88f9b;
+    --_sw-p-75: #fd9ca7;
+    --_sw-p-80: #ffadb6;
+    --_sw-p-85: #ffbbc3;
+    --_sw-p-90: #ffd0d6;
+    --_sw-p-95: #ffe7ea;
+    --_sw-p-99: #fffbfb;
 
     /* error swatches */
     --_sw-e-01: #050201;
@@ -778,7 +778,7 @@ ATOMS
 
     mark {
       /* visual */
-      background-color: var(--c-area-warning);
+      background-color: var(--c-area-warning-active);
       color: var(--c-text-warning);
       /* text */
       padding: var(--s-1) var(--s-4);
@@ -1051,7 +1051,8 @@ MOLECULES
     .button {
       flex-flow: row nowrap;
       align-items: center;
-      justify-content: space-between;
+      align-items: center;
+      justify-content: center;
       max-width: max-content;
       gap: var(--s-8);
       padding: var(--s-12) var(--s-16);
@@ -1102,6 +1103,7 @@ COMPONENTS
         & a.button {
           flex: 1;
           max-width: none;
+          justify-content: space-between;
 
           & span {
             white-space: nowrap;
@@ -1239,7 +1241,7 @@ COMPONENTS
           gap: var(--s-16-32);
           min-height: var(--s-64-128);
           padding: var(--s-16-32);
-          align-items: start;
+          align-items: center;
           max-width: 30rem;
 
           & img {

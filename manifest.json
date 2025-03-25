@@ -2,9 +2,22 @@
   "name": "Kobza",
   "short_name": "Kobza",
   "description": "Open Source English Course",
+  "categories": ["education"],
   "start_url": "/kobza/",
   "display": "standalone",
   "icons": [
+    {
+      "src": "kobza-logo-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable monochrome"
+    },
+    {
+      "src": "kobza-logo-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
     {
       "src": "android-icon-192x192.png",
       "sizes": "192x192",

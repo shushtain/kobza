@@ -247,8 +247,6 @@ def parse_header() -> html.Header:
     toggle_theme += html.Svg(class_=["icon"], id="toggle-light") + html.Use(
         href=icon("light-mode")
     )
-    # Prettier fix
-    toggle_theme += " "
     toggle_theme += html.Svg(class_=["icon"], id="toggle-dark") + html.Use(
         href=icon("dark-mode")
     )
