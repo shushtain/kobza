@@ -4,7 +4,10 @@ const root = document.documentElement;
 
 // THEME TOGGLING
 
-// initialize
+// Disable transitions immediately
+root.style.setProperty("--dur-switch", "0");
+
+// Initialize theme immediately
 if (!root.hasAttribute("data-theme")) {
   let initialTheme = "light";
 
@@ -23,20 +26,19 @@ if (!root.hasAttribute("data-theme")) {
   root.setAttribute("data-theme", initialTheme);
 }
 
-// change
-const toggleTheme = document.getElementById("toggle-theme");
+// Wait for DOM to be ready before setting up interactive features
+document.addEventListener("DOMContentLoaded", () => {
+  // Set up theme toggle
+  const toggleTheme = document.getElementById("toggle-theme");
+  toggleTheme.addEventListener("click", () => {
+    const currentTheme = root.getAttribute("data-theme");
+    const newTheme = currentTheme === "light" ? "dark" : "light";
+    localStorage.setItem("theme", newTheme);
+    root.setAttribute("data-theme", newTheme);
+  });
 
-toggleTheme.addEventListener("click", () => {
-  const currentTheme = root.getAttribute("data-theme");
-  const newTheme = currentTheme === "light" ? "dark" : "light";
-  localStorage.setItem("theme", newTheme);
-  root.setAttribute("data-theme", newTheme);
-});
-
-// fix for flickering
-root.style.setProperty("--dur-switch", "0");
-window.addEventListener("load", () => {
+  // Enable transitions after initial theme is applied
   setTimeout(() => {
     root.style.setProperty("--dur-switch", "1");
-  }, 200);
+  }, 1000);
 });

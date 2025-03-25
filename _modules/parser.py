@@ -103,7 +103,7 @@ def parse_head() -> html.Head:
     head += html.CommentHtml("Load scripts")
     head += html.Script(
         src=link(ROOT, "script.js"),
-        defer=True,
+        # defer=True,
     )
     if SCHEMA == "lesson":
         head += html.Script(
