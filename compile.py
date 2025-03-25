@@ -243,6 +243,7 @@ def map_lessons(data: dict) -> dict:
         if "lesson" not in page["meta"]:
             continue
 
+        topic = page["hero"][0]["content"] if "hero" in page else ""
         grammar = page["grammar"][0]["content"] if "grammar" in page else ""
         vocabulary = page["vocabulary"][0]["content"] if "vocabulary" in page else ""
 
@@ -262,6 +263,7 @@ def map_lessons(data: dict) -> dict:
             )
 
         sitemap[level][unit][lesson] = {
+            "topic": topic,
             "grammar": grammar,
             "vocabulary": vocabulary,
             "path": path,

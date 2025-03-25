@@ -19,7 +19,7 @@ As an English teacher from Ukraine, the main obstacle to working independently h
 - [x] Parse JSON lessons into web pages
 - [x] Interactive exercises
 - [ ] Proper styling
-- [ ] Vocabulary flashcards
+- [x] Vocabulary flashcards
 - [ ] Interactive tests
 - [ ] Warmup activities
 

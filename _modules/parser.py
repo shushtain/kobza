@@ -105,6 +105,11 @@ def parse_head() -> html.Head:
         src=link(ROOT, "script.js"),
         defer=True,
     )
+    if SCHEMA == "lesson":
+        head += html.Script(
+            src=link(ROOT, "script-lesson.js"),
+            defer=True,
+        )
 
     # Add favicons
     head += html.CommentHtml("Add favicons")
@@ -151,12 +156,12 @@ def parse_title() -> html.Title:
             content.append(WEBSITE)
 
         case "level":
-            content.append(LEVEL.upper())
+            content.append(f"Level {LEVEL.upper()}")
             content.append(WEBSITE)
 
         case "lesson":
-            content.append(UNIT + LESSON.upper())
-            content.append(LEVEL.upper())
+            content.append(f"Lesson {UNIT}{LESSON.upper()}")
+            content.append(f"Level {LEVEL.upper()}")
             content.append(WEBSITE)
 
     title += sep.join(content)
@@ -187,9 +192,10 @@ def parse_description() -> html.Meta:
         case "lesson":
             # content.append(f"{WEBSITE} {LEVEL.upper()}.")
             # content.append(f"Unit {UNIT}. Lesson {UNIT + LESSON.upper()}.")
+            topic = SITEMAP[LEVEL][UNIT][LESSON]["topic"]
             grammar = SITEMAP[LEVEL][UNIT][LESSON]["grammar"]
             vocabulary = SITEMAP[LEVEL][UNIT][LESSON]["vocabulary"]
-            content.append(". ".join([grammar, vocabulary]))
+            content.append(". ".join([topic, grammar, vocabulary]))
 
     description.content = sep.join(content)
 
@@ -239,12 +245,12 @@ def parse_header() -> html.Header:
         aria_attrs={"aria-label": "Toggle theme"},
     )
     toggle_theme += html.Svg(class_=["icon"], id="toggle-light") + html.Use(
-        href=link(ROOT, "icons", "sprite.svg#light-mode")
+        href=icon("light-mode")
     )
     # Prettier fix
     toggle_theme += " "
     toggle_theme += html.Svg(class_=["icon"], id="toggle-dark") + html.Use(
-        href=link(ROOT, "icons", "sprite.svg#dark-mode")
+        href=icon("dark-mode")
     )
 
     header += nav
@@ -296,8 +302,9 @@ def parse_footer() -> html.Footer:
             lesson_prev_text = ". ".join(
                 [
                     f"Lesson {truncated}",
-                    SITEMAP[LEVEL][lesson_prev[0]][lesson_prev[1]]["grammar"],
-                    SITEMAP[LEVEL][lesson_prev[0]][lesson_prev[1]]["vocabulary"],
+                    SITEMAP[LEVEL][lesson_prev[0]][lesson_prev[1]]["topic"],
+                    # SITEMAP[LEVEL][lesson_prev[0]][lesson_prev[1]]["grammar"],
+                    # SITEMAP[LEVEL][lesson_prev[0]][lesson_prev[1]]["vocabulary"],
                 ]
             )
             nav_prev = html.A(
@@ -305,9 +312,7 @@ def parse_footer() -> html.Footer:
                 class_=["button", "prev"],
                 aria_attrs={"aria-label": "Previous lesson"},
             )
-            nav_prev += html.Svg(class_=["icon"]) + html.Use(
-                href=link(ROOT, "icons", "sprite.svg#arrow-left")
-            )
+            nav_prev += html.Svg(class_=["icon"]) + html.Use(href=icon("arrow-left"))
             nav_prev += html.Span(class_=["long"]) + lesson_prev_text
             nav_prev += html.Span(class_=["short"]) + truncated
 
@@ -318,8 +323,9 @@ def parse_footer() -> html.Footer:
             lesson_next_text = ". ".join(
                 [
                     f"Lesson {truncated}",
-                    SITEMAP[LEVEL][lesson_next[0]][lesson_next[1]]["grammar"],
-                    SITEMAP[LEVEL][lesson_next[0]][lesson_next[1]]["vocabulary"],
+                    SITEMAP[LEVEL][lesson_next[0]][lesson_next[1]]["topic"],
+                    # SITEMAP[LEVEL][lesson_next[0]][lesson_next[1]]["grammar"],
+                    # SITEMAP[LEVEL][lesson_next[0]][lesson_next[1]]["vocabulary"],
                 ]
             )
             nav_next = html.A(
@@ -329,18 +335,14 @@ def parse_footer() -> html.Footer:
             )
             nav_next += html.Span(class_=["long"]) + lesson_next_text
             nav_next += html.Span(class_=["short"]) + truncated
-            nav_next += html.Svg(class_=["icon"]) + html.Use(
-                href=link(ROOT, "icons", "sprite.svg#arrow-right")
-            )
+            nav_next += html.Svg(class_=["icon"]) + html.Use(href=icon("arrow-right"))
 
     nav_up = html.A(
         href="#",
         class_=["button", "up"],
         aria_attrs={"aria-label": "To the top"},
     )
-    nav_up += html.Svg(class_=["icon"]) + html.Use(
-        href=link(ROOT, "icons", "sprite.svg#arrow-up")
-    )
+    nav_up += html.Svg(class_=["icon"]) + html.Use(href=icon("arrow-up"))
 
     nav += nav_prev
     nav += nav_up
@@ -571,21 +573,30 @@ def parse_aside(content, scope, classes, id_, mod) -> html.Aside:
 
 
 def parse_cta(content, scope, classes, id_, mod) -> html.A:
-    """Parse a.button"""
-    button = html.A(class_=classes + ["button"], id=id_)
+    """Parse Call to Action"""
+    cta = html.A(class_=classes + ["button"], id=id_)
 
     text = content["text"]
-    href = content["link"]
     title = content["title"] if "title" in content else None
-    href, target = parse_raw_link(href)
+    href, target = parse_raw_link(content["link"])
     target = content["target"] if "target" in content else target
 
-    button.href = href
-    button.title = title
-    button.target = target
-    button += html.Span() + text
+    if "mail" in classes or "mailto:" in href:
+        cta += html.Svg(class_=["icon"]) + html.Use(href=icon("mail"))
+    elif "file" in classes:
+        cta += html.Svg(class_=["icon"]) + html.Use(href=icon("file"))
 
-    return button
+    cta.href = href
+    cta.title = title
+    cta.target = target
+    cta += html.Span() + text
+
+    if "download" in classes:
+        cta += html.Svg(class_=["icon"]) + html.Use(href=icon("download"))
+    elif "more" in classes:
+        cta += html.Svg(class_=["icon"]) + html.Use(href=icon("arrow-right"))
+
+    return cta
 
 
 def parse_figure(content, scope, classes, id_, mod) -> html.Figure:
@@ -612,26 +623,35 @@ def parse_toc(content, scope, classes, id_, mod) -> html.Div:
 
         case "main":
             for level in SITEMAP:
-                toc += html.A(
+                card = html.A(
                     href=link(ROOT, level),
-                    class_=["tile", "accent", level],
-                    inner_html=level.upper(),
+                    class_=["tile", level],
                 )
+                text = html.Span() + level.upper()
+                toc += card + text
 
         case "level":
             for unit, lessons in SITEMAP[LEVEL].items():
                 ul = html.Ul()
                 for lesson, topics in lessons.items():
-                    ul += html.Li() + html.A(
+                    card = html.A(
                         href=link(ROOT, LEVEL, unit + lesson),
-                        inner_html=". ".join(
-                            [
-                                f"Lesson {unit + lesson.upper()}",
-                                topics["grammar"],
-                                topics["vocabulary"],
-                            ]
-                        ),
+                        class_=["button"],
                     )
+                    text = html.Span() + ". ".join(
+                        [
+                            f"Lesson {unit + lesson.upper()}",
+                            topics["topic"],
+                            # topics["grammar"],
+                            # topics["vocabulary"],
+                        ]
+                    )
+                    text += html.Br()
+                    text += html.Small() + ". ".join(
+                        [topics["grammar"], topics["vocabulary"]]
+                    )
+                    card += text
+                    ul += html.Li() + card
                 toc += html.Section() + html.H3(inner_html=f"Unit {unit}") + ul
 
     return toc
@@ -639,6 +659,27 @@ def parse_toc(content, scope, classes, id_, mod) -> html.Div:
 
 def parse_flashcards(content, scope, classes, id_, mod) -> html.Div:
     """Parse flashcards"""
+    flashcards_wrapper = html.Div(class_=["flashcards-wrapper"])
+
+    # controls
+
+    flashcards_controls = html.Div(class_=["controls"])
+    toggle_flashcards = html.Button(
+        type="button", class_=["button", "toggle-flashcards"]
+    )
+    toggle_flashcards += html.Svg(class_=["icon", "toggle-show"]) + html.Use(
+        href=icon("show")
+    )
+    toggle_flashcards += html.Svg(class_=["icon", "toggle-hide"]) + html.Use(
+        href=icon("hide")
+    )
+    toggle_flashcards += html.Span() + "Show answers"
+    flashcards_controls += toggle_flashcards
+
+    flashcards_wrapper += flashcards_controls
+
+    # flashcards
+
     flashcards = html.Div(class_=classes + ["flashcards"], id=id_)
 
     for item in content:
@@ -663,7 +704,9 @@ def parse_flashcards(content, scope, classes, id_, mod) -> html.Div:
         card += dl
         flashcards += card
 
-    return flashcards
+    flashcards_wrapper += flashcards
+
+    return flashcards_wrapper
 
 
 def parse_ex_choice(content, scope, classes, id_, mod) -> html.Div:
@@ -914,3 +957,9 @@ def link(*parts, as_is=False):
             is_directory = True
 
     return "/".join(parts) + ("/" if is_directory else "")
+
+
+def icon(icon_name: str):
+    """Return a link to an icon"""
+
+    return link(ROOT, "icons", f"sprite.svg#{icon_name}")

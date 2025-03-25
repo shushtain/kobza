@@ -43,11 +43,11 @@
                 :::
                     q :: yet
                     a :: used in questions and negatives about recent events
-                    img :: \\
+                    img :: hello.jpg
                 :::
                     q :: just
                     a :: very recently, a moment ago
-                    img :: \\
+                    img :: hello.jpg
                 :::
                     q :: ever
                     a :: at any time (in questions and negatives)
@@ -55,15 +55,15 @@
                 :::
                     q :: never
                     a :: at no time, not ever
-                    img :: \\
+                    img :: hello.jpg
                 :::
                     q :: lately
                     a :: recently, in the recent past
-                    img :: \\
+                    img :: hello.jpg
                 :::
                     q :: since
                     a :: from a specific point in time until now
-                    img :: \\
+                    img :: hello.jpg
                 :::
                     q :: for
                     a ::
