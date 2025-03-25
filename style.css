@@ -704,14 +704,9 @@ ATOMS
       display: inline-block;
       width: var(--s-20);
       height: var(--s-20);
-      margin: var(--s-2) calc(var(--s-2) * -1);
       overflow: visible;
       /* visual */
       fill: currentColor;
-
-      :has(span) > & {
-        margin: var(--s-2) 0;
-      }
     }
   }
 
@@ -1051,7 +1046,6 @@ MOLECULES
     .button {
       flex-flow: row nowrap;
       align-items: center;
-      align-items: center;
       justify-content: center;
       max-width: max-content;
       gap: var(--s-8);
@@ -1061,6 +1055,14 @@ MOLECULES
       font-weight: var(--fw-l);
       line-height: var(--lh-l);
       letter-spacing: var(--ls-l);
+
+      &:has(span):has(svg) {
+        justify-content: space-between;
+      }
+
+      &:not(:has(span)) {
+        padding: var(--s-12);
+      }
 
       & span {
         margin: var(--s-4) 0;
@@ -1103,7 +1105,6 @@ COMPONENTS
         & a.button {
           flex: 1;
           max-width: none;
-          justify-content: space-between;
 
           & span {
             white-space: nowrap;
