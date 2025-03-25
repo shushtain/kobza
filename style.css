@@ -1148,6 +1148,7 @@ COMPONENTS
           font-weight: var(--fw-h);
           line-height: var(--lh-h2);
           color: var(--c-text-neutral);
+          justify-content: flex-start;
 
           & small {
             font-weight: var(--fw-p);
