@@ -38,5 +38,5 @@ root.style.setProperty("--dur-switch", "0");
 window.addEventListener("load", () => {
   setTimeout(() => {
     root.style.setProperty("--dur-switch", "1");
-  }, 1);
+  }, 200);
 });
