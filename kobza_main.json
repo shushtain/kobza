@@ -17,9 +17,12 @@
       "content": "Got questions or proposals?"
     },
     {
-      "type": "button",
+      "type": "cta",
       "class": "mail",
-      "content": "[shushtain@gmail.com](mailto:shushtain@gmail.com)"
+      "content": {
+        "text": "shushtain@gmail.com",
+        "link": "mailto:shushtain@gmail.com"
+      }
     }
   ],
   "levels": [
@@ -43,7 +46,7 @@
     {
       "type": "button",
       "class": "test",
-      "content": "[Test your level](~/test)"
+      "content": "[Test your level](~/test/)"
     }
   ],
   "about": [

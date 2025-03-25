@@ -30,15 +30,10 @@
       }
     },
     {
-      "type": "quote",
+      "type": "ul",
       "content": [
-        {
-          "type": "ul",
-          "content": [
-            "What information do people exchange during the first meeting?",
-            "Can you say it in English?"
-          ]
-        }
+        "What information do people exchange during the first meeting?",
+        "Can you say it in English?"
       ]
     }
   ],
@@ -123,7 +118,7 @@
       "content": ""
     },
     {
-      "type": "quote",
+      "type": "aside",
       "content": ""
     },
     {
@@ -131,7 +126,7 @@
       "content": ""
     },
     {
-      "type": "quote",
+      "type": "aside",
       "content": ""
     }
   ],
@@ -148,7 +143,7 @@
           "content": "Complete the sentences."
         },
         {
-          "type": "fillgaps",
+          "type": "ex-fill",
           "content": [
             "Are you a teacher? — Yes, I |am|.",
             "|Are| we free now? — Yes, go.",
@@ -168,7 +163,7 @@
           "content": "Order the words to form sentences."
         },
         {
-          "type": "orderwords",
+          "type": "ex-order",
           "content": [
             "I | am | not | ten | years | old",
             "we | are | from | the | Netherlands",
@@ -188,7 +183,7 @@
           "content": "Find matches."
         },
         {
-          "type": "matchpictures",
+          "type": "ex-match-img",
           "content": [
             {
               "text": "Hello",

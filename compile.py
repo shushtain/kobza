@@ -258,7 +258,7 @@ def map_lessons(data: dict) -> dict:
 
         if lesson in sitemap[level][unit]:
             raise ValueError(
-                f'{path} is duplicating lesson code "{lesson}" of {sitemap[level][unit][lesson]["path"]}'
+                f'{path} is duplicating lesson code "{lesson.upper()}" of {sitemap[level][unit][lesson]["path"]}'
             )
 
         sitemap[level][unit][lesson] = {
@@ -299,20 +299,27 @@ def generate_page(
 
     file_name = "index.html"
 
+    page_html: html.Html | None = None
+
     match data["meta"]["type"]:
         case "main":
-            page = parser.parse_page()
+            page_html = parser.parse_html()
         case "404":
-            page = parser.parse_page()
+            page_html = parser.parse_html()
             file_name = "404.html"
         case "level":
-            page = parser.parse_page()
+            page_html = parser.parse_html()
         case "lesson":
-            page = parser.parse_page()
+            page_html = parser.parse_html()
+        case "test":
+            page_html = parser.parse_html()
         case _:
             raise ValueError(f"{path[-1]} has unknown page type.")
 
-    page = str(html.Doctype()) + str(page)
+    if page_html is None:
+        raise ValueError(f"{path[-1]} could not be parsed into HTML.")
+
+    page: str = str(html.Doctype()) + str(page_html)
     if npx_path is not None:
         page = format_page(page, npx_path)
 

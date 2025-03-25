@@ -25,13 +25,10 @@
                 alt :: \\
                 figcaption :: \\
         :::
-            type :: quote
+            type :: ul
             content ::
-                :::
-                    type :: ul
-                    content ::
-                        What information do people exchange during the first meeting?
-                        Can you say it in English?
+                What information do people exchange during the first meeting?
+                Can you say it in English?
 
     vocabulary ::
         :::
@@ -97,13 +94,13 @@
             type :: p
             content :: \\
         :::
-            type :: quote
+            type :: aside
             content :: \\
         :::
             type :: p
             content :: \\
         :::
-            type :: quote
+            type :: aside
             content :: \\
 
     practice ::
@@ -117,7 +114,7 @@
                     type :: h3
                     content :: Complete the sentences.
                 :::
-                    type :: fillgaps
+                    type :: ex-fill
                     content ::
                         Are you a teacher? — Yes, I |am|.
                         |Are| we free now? — Yes, go.
@@ -132,7 +129,7 @@
                     type :: h3
                     content :: Order the words to form sentences.
                 :::
-                    type :: orderwords
+                    type :: ex-order
                     content ::
                         I | am | not | ten | years | old
                         we | are | from | the | Netherlands
@@ -147,7 +144,7 @@
                     type :: h3
                     content :: Find matches.
                 :::
-                    type :: matchpictures
+                    type :: ex-match-img
                     content ::
                         :::
                             text :: Hello

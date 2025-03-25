@@ -1,264 +1,307 @@
-// FLASHCARDS
-class FlashcardViewer {
-  constructor(container) {
-    this.container = container;
-    this.cards = this.getCards();
-    this.currentIndex = 0;
-    this.isFlipped = false;
+// INIT
 
-    // Cache DOM elements
-    this.cardInner = container.querySelector(".inner");
-    this.cardFront = container.querySelector(".front");
-    this.cardBack = container.querySelector(".back");
-    this.counter = container.querySelector(".counter");
-    this.window = container.querySelector(".window");
+const root = document.documentElement;
 
-    // Bind controls
-    container.querySelector(".button.prev").addEventListener("click", (e) => {
-      e.preventDefault();
-      this.prev();
-      this.window.focus();
-    });
-    container.querySelector(".button.next").addEventListener("click", (e) => {
-      e.preventDefault();
-      this.next();
-      this.window.focus();
-    });
-    container.querySelector(".button.flip").addEventListener("click", (e) => {
-      e.preventDefault();
-      this.flip();
-      this.window.focus();
-    });
-    container
-      .querySelector(".button.restart")
-      .addEventListener("click", (e) => {
-        e.preventDefault();
-        this.restart();
-        this.window.focus();
-      });
+// THEME TOGGLING
 
-    // Add click event to window
-    this.window.addEventListener("click", (e) => {
-      e.preventDefault();
-      this.flip();
-      this.window.focus();
-    });
+// initialize
+if (!root.hasAttribute("data-theme")) {
+  let initialTheme = "light";
 
-    // Add keyboard control
-    this.window.addEventListener("keydown", (e) => {
-      if (e.code === "Space") {
-        e.preventDefault();
-        this.flip();
-      }
-      if (e.code === "ArrowRight") {
-        e.preventDefault();
-        this.next();
-      }
-      if (e.code === "ArrowLeft") {
-        e.preventDefault();
-        this.prev();
-      }
-    });
-
-    // Initialize
-    this.updateCard();
+  // Check system theme
+  const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+  if (systemTheme === "dark") {
+    initialTheme = "dark";
   }
 
-  getCards() {
-    return Array.from(
-      this.container.querySelectorAll(".flashcards .flashcard")
-    ).map((card) => ({
-      question: card.querySelector("dt").textContent,
-      answer: card.querySelector("dd").textContent,
-      image: card.querySelector("img").src,
-    }));
+  const cachedTheme = localStorage.getItem("theme");
+  if (cachedTheme) {
+    initialTheme = cachedTheme;
   }
-
-  updateCard() {
-    const card = this.cards[this.currentIndex];
-    this.cardFront.innerHTML = `
-      <img src="${card.image}" alt="">
-      <h3>${card.question}</h3>
-    `;
-    this.cardBack.innerHTML = `
-      <img src="${card.image}" alt="">
-      <p>${card.answer}</p>
-    `;
-    this.counter.textContent = `${this.currentIndex + 1}/${this.cards.length}`;
-    this.isFlipped = false;
-    this.cardInner.classList.remove("flipped");
-  }
-
-  next() {
-    if (this.currentIndex < this.cards.length - 1) {
-      this.currentIndex++;
-      this.updateCard();
-    }
-  }
-
-  prev() {
-    if (this.currentIndex > 0) {
-      this.currentIndex--;
-      this.updateCard();
-    }
-  }
-
-  flip() {
-    this.isFlipped = !this.isFlipped;
-    this.cardInner.classList.toggle("flipped");
-  }
-
-  restart() {
-    this.currentIndex = 0;
-    this.updateCard();
-  }
+  root.setAttribute("data-theme", initialTheme);
 }
 
-// Initialize all flashcard viewers on the page
-document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll(".flashcards-wrapper").forEach((container) => {
-    new FlashcardViewer(container);
-  });
+// change
+const toggleTheme = document.getElementById("toggle-theme");
+
+toggleTheme.addEventListener("click", () => {
+  const currentTheme = root.getAttribute("data-theme");
+  const newTheme = currentTheme === "light" ? "dark" : "light";
+  localStorage.setItem("theme", newTheme);
+  root.setAttribute("data-theme", newTheme);
 });
 
-// ORDERWORDS
-
-const orderwords = document.querySelectorAll(".ex-ow-task");
-
-orderwords.forEach((orderwordsLine) => {
-  const items = orderwordsLine.querySelectorAll(".draggable");
-  let draggedItem = null;
-
-  let correctOrder = [];
-
-  items.forEach((item) => {
-    correctOrder.push(item.innerHTML);
-
-    item.addEventListener("dragstart", (e) => {
-      draggedItem = item;
-      e.dataTransfer.effectAllowed = "move";
-      e.dataTransfer.setData("text/html", item.outerHTML);
-    });
-
-    item.addEventListener("dragover", (e) => {
-      e.preventDefault();
-    });
-
-    item.addEventListener("drop", (e) => {
-      e.preventDefault();
-      if (item !== draggedItem) {
-        const draggedIndex = Array.from(orderwordsLine.children).indexOf(
-          draggedItem
-        );
-        const targetIndex = Array.from(orderwordsLine.children).indexOf(item);
-        orderwordsLine.insertBefore(
-          draggedItem,
-          targetIndex > draggedIndex ? item.nextSibling : item
-        );
-        orderwordsCheck(orderwordsLine);
-      }
-    });
-    item.setAttribute("draggable", true);
-  });
-
-  orderwordsLine.setAttribute("data-correct-order", correctOrder.join(","));
-
-  let newOrder = Array.from(items);
-
-  for (let i = newOrder.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [newOrder[i], newOrder[j]] = [newOrder[j], newOrder[i]];
-  }
-
-  orderwordsLine.innerHTML = "";
-
-  newOrder.forEach((item) => {
-    orderwordsLine.appendChild(item);
-  });
+// fix for flickering
+root.style.setProperty("--dur-switch", "0");
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    root.style.setProperty("--dur-switch", "1");
+  }, 1);
 });
 
-function orderwordsCheck(line) {
-  const items = line.querySelectorAll(".draggable");
-  let currentOrder = [];
+// // FLASHCARDS
+// class FlashcardViewer {
+//   constructor(container) {
+//     this.container = container;
+//     this.cards = this.getCards();
+//     this.currentIndex = 0;
+//     this.isFlipped = false;
 
-  items.forEach((item) => {
-    currentOrder.push(item.innerHTML);
-  });
+//     // Cache DOM elements
+//     this.cardInner = container.querySelector(".inner");
+//     this.cardFront = container.querySelector(".front");
+//     this.cardBack = container.querySelector(".back");
+//     this.counter = container.querySelector(".counter");
+//     this.window = container.querySelector(".window");
 
-  if (currentOrder.join(",") === line.getAttribute("data-correct-order")) {
-    line.classList.add("success");
-  } else {
-    line.classList.remove("success");
-  }
-}
+//     // Bind controls
+//     container.querySelector(".button.prev").addEventListener("click", (e) => {
+//       e.preventDefault();
+//       this.prev();
+//       this.window.focus();
+//     });
+//     container.querySelector(".button.next").addEventListener("click", (e) => {
+//       e.preventDefault();
+//       this.next();
+//       this.window.focus();
+//     });
+//     container.querySelector(".button.flip").addEventListener("click", (e) => {
+//       e.preventDefault();
+//       this.flip();
+//       this.window.focus();
+//     });
+//     container
+//       .querySelector(".button.restart")
+//       .addEventListener("click", (e) => {
+//         e.preventDefault();
+//         this.restart();
+//         this.window.focus();
+//       });
 
-// MATCHPICTURES
+//     // Add click event to window
+//     this.window.addEventListener("click", (e) => {
+//       e.preventDefault();
+//       this.flip();
+//       this.window.focus();
+//     });
 
-const matchpictures = document.querySelectorAll(".ex-mp-task");
+//     // Add keyboard control
+//     this.window.addEventListener("keydown", (e) => {
+//       if (e.code === "Space") {
+//         e.preventDefault();
+//         this.flip();
+//       }
+//       if (e.code === "ArrowRight") {
+//         e.preventDefault();
+//         this.next();
+//       }
+//       if (e.code === "ArrowLeft") {
+//         e.preventDefault();
+//         this.prev();
+//       }
+//     });
 
-matchpictures.forEach((matchpicture) => {
-  const items = matchpicture.querySelectorAll(".draggable");
-  let draggedItem = null;
+//     // Initialize
+//     this.updateCard();
+//   }
 
-  let correctOrder = [];
+//   getCards() {
+//     return Array.from(
+//       this.container.querySelectorAll(".flashcards .flashcard")
+//     ).map((card) => ({
+//       question: card.querySelector("dt").textContent,
+//       answer: card.querySelector("dd").textContent,
+//       image: card.querySelector("img").src,
+//     }));
+//   }
 
-  items.forEach((item) => {
-    correctOrder.push(item.innerHTML);
+//   updateCard() {
+//     const card = this.cards[this.currentIndex];
+//     this.cardFront.innerHTML = `
+//       <img src="${card.image}" alt="">
+//       <h3>${card.question}</h3>
+//     `;
+//     this.cardBack.innerHTML = `
+//       <img src="${card.image}" alt="">
+//       <p>${card.answer}</p>
+//     `;
+//     this.counter.textContent = `${this.currentIndex + 1}/${this.cards.length}`;
+//     this.isFlipped = false;
+//     this.cardInner.classList.remove("flipped");
+//   }
 
-    item.addEventListener("dragstart", (e) => {
-      draggedItem = item;
-      e.dataTransfer.effectAllowed = "move";
-      e.dataTransfer.setData("text/html", item.outerHTML);
-    });
+//   next() {
+//     if (this.currentIndex < this.cards.length - 1) {
+//       this.currentIndex++;
+//       this.updateCard();
+//     }
+//   }
 
-    item.addEventListener("dragover", (e) => {
-      e.preventDefault();
-    });
+//   prev() {
+//     if (this.currentIndex > 0) {
+//       this.currentIndex--;
+//       this.updateCard();
+//     }
+//   }
 
-    item.addEventListener("drop", (e) => {
-      e.preventDefault();
-      if (item !== draggedItem) {
-        const draggedIndex = Array.from(matchpicture.children).indexOf(
-          draggedItem
-        );
-        const targetIndex = Array.from(matchpicture.children).indexOf(item);
-        matchpicture.insertBefore(
-          draggedItem,
-          targetIndex > draggedIndex ? item.nextSibling : item
-        );
-        mpCheck(matchpicture);
-      }
-    });
-    item.setAttribute("draggable", true);
-  });
+//   flip() {
+//     this.isFlipped = !this.isFlipped;
+//     this.cardInner.classList.toggle("flipped");
+//   }
 
-  matchpicture.setAttribute("data-correct-order", correctOrder.join(","));
+//   restart() {
+//     this.currentIndex = 0;
+//     this.updateCard();
+//   }
+// }
 
-  let newOrder = Array.from(items);
+// // Initialize all flashcard viewers on the page
+// document.addEventListener("DOMContentLoaded", () => {
+//   document.querySelectorAll(".flashcards-wrapper").forEach((container) => {
+//     new FlashcardViewer(container);
+//   });
+// });
 
-  for (let i = newOrder.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [newOrder[i], newOrder[j]] = [newOrder[j], newOrder[i]];
-  }
+// // ORDERWORDS
 
-  matchpicture.innerHTML = "";
+// const orderwords = document.querySelectorAll(".ex-ow-task");
 
-  newOrder.forEach((item) => {
-    matchpicture.appendChild(item);
-  });
-});
+// orderwords.forEach((orderwordsLine) => {
+//   const items = orderwordsLine.querySelectorAll(".draggable");
+//   let draggedItem = null;
 
-function mpCheck(line) {
-  const items = line.querySelectorAll(".draggable");
-  let currentOrder = [];
+//   let correctOrder = [];
 
-  items.forEach((item) => {
-    currentOrder.push(item.innerHTML);
-  });
+//   items.forEach((item) => {
+//     correctOrder.push(item.innerHTML);
 
-  if (currentOrder.join(",") === line.getAttribute("data-correct-order")) {
-    line.classList.add("success");
-  } else {
-    line.classList.remove("success");
-  }
-}
+//     item.addEventListener("dragstart", (e) => {
+//       draggedItem = item;
+//       e.dataTransfer.effectAllowed = "move";
+//       e.dataTransfer.setData("text/html", item.outerHTML);
+//     });
+
+//     item.addEventListener("dragover", (e) => {
+//       e.preventDefault();
+//     });
+
+//     item.addEventListener("drop", (e) => {
+//       e.preventDefault();
+//       if (item !== draggedItem) {
+//         const draggedIndex = Array.from(orderwordsLine.children).indexOf(
+//           draggedItem
+//         );
+//         const targetIndex = Array.from(orderwordsLine.children).indexOf(item);
+//         orderwordsLine.insertBefore(
+//           draggedItem,
+//           targetIndex > draggedIndex ? item.nextSibling : item
+//         );
+//         orderwordsCheck(orderwordsLine);
+//       }
+//     });
+//     item.setAttribute("draggable", true);
+//   });
+
+//   orderwordsLine.setAttribute("data-correct-order", correctOrder.join(","));
+
+//   let newOrder = Array.from(items);
+
+//   for (let i = newOrder.length - 1; i > 0; i--) {
+//     const j = Math.floor(Math.random() * (i + 1));
+//     [newOrder[i], newOrder[j]] = [newOrder[j], newOrder[i]];
+//   }
+
+//   orderwordsLine.innerHTML = "";
+
+//   newOrder.forEach((item) => {
+//     orderwordsLine.appendChild(item);
+//   });
+// });
+
+// function orderwordsCheck(line) {
+//   const items = line.querySelectorAll(".draggable");
+//   let currentOrder = [];
+
+//   items.forEach((item) => {
+//     currentOrder.push(item.innerHTML);
+//   });
+
+//   if (currentOrder.join(",") === line.getAttribute("data-correct-order")) {
+//     line.classList.add("success");
+//   } else {
+//     line.classList.remove("success");
+//   }
+// }
+
+// // MATCHPICTURES
+
+// const matchpictures = document.querySelectorAll(".ex-mp-task");
+
+// matchpictures.forEach((matchpicture) => {
+//   const items = matchpicture.querySelectorAll(".draggable");
+//   let draggedItem = null;
+
+//   let correctOrder = [];
+
+//   items.forEach((item) => {
+//     correctOrder.push(item.innerHTML);
+
+//     item.addEventListener("dragstart", (e) => {
+//       draggedItem = item;
+//       e.dataTransfer.effectAllowed = "move";
+//       e.dataTransfer.setData("text/html", item.outerHTML);
+//     });
+
+//     item.addEventListener("dragover", (e) => {
+//       e.preventDefault();
+//     });
+
+//     item.addEventListener("drop", (e) => {
+//       e.preventDefault();
+//       if (item !== draggedItem) {
+//         const draggedIndex = Array.from(matchpicture.children).indexOf(
+//           draggedItem
+//         );
+//         const targetIndex = Array.from(matchpicture.children).indexOf(item);
+//         matchpicture.insertBefore(
+//           draggedItem,
+//           targetIndex > draggedIndex ? item.nextSibling : item
+//         );
+//         mpCheck(matchpicture);
+//       }
+//     });
+//     item.setAttribute("draggable", true);
+//   });
+
+//   matchpicture.setAttribute("data-correct-order", correctOrder.join(","));
+
+//   let newOrder = Array.from(items);
+
+//   for (let i = newOrder.length - 1; i > 0; i--) {
+//     const j = Math.floor(Math.random() * (i + 1));
+//     [newOrder[i], newOrder[j]] = [newOrder[j], newOrder[i]];
+//   }
+
+//   matchpicture.innerHTML = "";
+
+//   newOrder.forEach((item) => {
+//     matchpicture.appendChild(item);
+//   });
+// });
+
+// function mpCheck(line) {
+//   const items = line.querySelectorAll(".draggable");
+//   let currentOrder = [];
+
+//   items.forEach((item) => {
+//     currentOrder.push(item.innerHTML);
+//   });
+
+//   if (currentOrder.join(",") === line.getAttribute("data-correct-order")) {
+//     line.classList.add("success");
+//   } else {
+//     line.classList.remove("success");
+//   }
+// }
