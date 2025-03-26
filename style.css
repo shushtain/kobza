@@ -1048,7 +1048,7 @@ MOLECULES
       flex-flow: row nowrap;
       align-items: center;
       justify-content: center;
-      max-width: max-content;
+      max-width: fit-content;
       gap: var(--s-8);
       padding: var(--s-12) var(--s-16);
       /* text */
@@ -1127,7 +1127,7 @@ COMPONENTS
           }
 
           &:nth-child(2) {
-            width: max-content;
+            width: fit-content;
             flex: 0 0 auto;
           }
         }
@@ -1284,10 +1284,10 @@ COMPONENTS
 
       ol {
         list-style-type: decimal;
-        margin-left: 1.25em;
+        margin-left: 1em;
 
         li {
-          padding-left: var(--s-12);
+          padding-left: var(--s-16);
           margin-bottom: var(--s-32);
 
           .q {
@@ -1345,7 +1345,7 @@ COMPONENTS
 
       ol {
         list-style-type: decimal;
-        margin-left: 1.25em;
+        margin-left: 1em;
 
         li {
           padding-left: var(--s-12);
@@ -1383,10 +1383,10 @@ COMPONENTS
 
       ol {
         list-style-type: decimal;
-        margin-left: 1.25em;
+        margin-left: 1em;
 
         li {
-          padding-left: var(--s-12);
+          padding-left: var(--s-16);
           margin-bottom: var(--s-16);
           line-height: 3.5;
 

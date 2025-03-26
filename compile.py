@@ -247,9 +247,9 @@ def map_lessons(data: dict) -> dict:
         grammar = page["grammar"][0]["content"] if "grammar" in page else ""
         vocabulary = page["vocabulary"][0]["content"] if "vocabulary" in page else ""
 
-        level = page["meta"]["level"].lower()
-        unit = page["meta"]["unit"].lower()
-        lesson = page["meta"]["lesson"].lower()
+        level = str(page["meta"]["level"]).lower()
+        unit = str(page["meta"]["unit"])
+        lesson = str(page["meta"]["lesson"]).lower()
 
         if level not in sitemap:
             sitemap[level] = {}
@@ -291,11 +291,11 @@ def generate_page(
     parser.DATA = data
     parser.FONTS = fonts
     parser.VERSION = version
-    parser.WEBSITE = meta["book"] if "book" in meta else ""
-    parser.LEVEL = meta["level"].lower() if "level" in meta else ""
-    parser.UNIT = meta["unit"].lower() if "unit" in meta else ""
-    parser.LESSON = meta["lesson"].lower() if "lesson" in meta else ""
-    parser.SCHEMA = meta["type"].lower() if "type" in meta else ""
+    parser.WEBSITE = str(meta["book"]) if "book" in meta else ""
+    parser.LEVEL = str(meta["level"]).lower() if "level" in meta else ""
+    parser.UNIT = str(meta["unit"]) if "unit" in meta else ""
+    parser.LESSON = str(meta["lesson"]).lower() if "lesson" in meta else ""
+    parser.SCHEMA = str(meta["type"]).lower() if "type" in meta else ""
     parser.ROOT = "/".join([".." for _ in path[:-1]])[:-1]  # ../../.
     parser.ROOT_ABS = ROOT_ABS
 
