@@ -593,6 +593,7 @@ PAGE
     height: 100%;
     scrollbar-gutter: stable;
     -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
     text-rendering: optimizeLegibility;
     scroll-behavior: smooth;
     accent-color: var(--c-border-accent);
