@@ -1284,10 +1284,10 @@ COMPONENTS
 
       ol {
         list-style-type: decimal;
-        margin-left: var(--s-16);
+        margin-left: 1.25em;
 
         li {
-          padding-left: var(--s-8);
+          padding-left: var(--s-12);
           margin-bottom: var(--s-32);
 
           .q {
@@ -1345,10 +1345,10 @@ COMPONENTS
 
       ol {
         list-style-type: decimal;
-        margin-left: var(--s-16);
+        margin-left: 1.25em;
 
         li {
-          padding-left: var(--s-8);
+          padding-left: var(--s-12);
           margin-bottom: var(--s-16);
           line-height: 3.5;
 
@@ -1383,10 +1383,10 @@ COMPONENTS
 
       ol {
         list-style-type: decimal;
-        margin-left: var(--s-16);
+        margin-left: 1.25em;
 
         li {
-          padding-left: var(--s-8);
+          padding-left: var(--s-12);
           margin-bottom: var(--s-16);
           line-height: 3.5;
 
@@ -1540,6 +1540,7 @@ MARKERS
 @layer markers {
   ::marker {
     color: var(--c-label-neutral);
+    font-size: var(--fs-l);
   }
   .error ::marker {
     color: var(--c-label-error);
