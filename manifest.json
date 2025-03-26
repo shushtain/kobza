@@ -5,20 +5,24 @@
   "categories": ["education"],
   "start_url": "/kobza/",
   "display": "standalone",
-  "theme_color": "#932c38",
-  "background_color": "#e6e6e6",
   "icons": [
+    {
+      "src": "kobza-logo-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "monochrome maskable"
+    },
     {
       "src": "kobza-logo-512x512.svg",
       "sizes": "512x512",
       "type": "image/svg+xml",
-      "purpose": "maskable monochrome any"
+      "purpose": "monochrome maskable"
     },
     {
       "src": "kobza-logo-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "maskable monochrome any"
+      "purpose": "any"
     },
     {
       "src": "android-icon-192x192.png",
