@@ -1136,7 +1136,6 @@ COMPONENTS
   }
 
   /* * TOC */
-
   @layer toc {
     .toc {
       & ul {
@@ -1201,7 +1200,6 @@ COMPONENTS
   }
 
   /* * FLASHCARDS */
-
   @layer flashcards {
     .flashcards-wrapper {
       display: flex;
@@ -1277,6 +1275,174 @@ COMPONENTS
         }
       }
     }
+  }
+
+  /* * EX-CHOICE */
+  @layer ex-choice {
+    .ex-choice {
+      margin-top: var(--s-16);
+
+      ol {
+        list-style-type: decimal;
+        margin-left: var(--s-16);
+
+        li {
+          padding-left: var(--s-8);
+          margin-bottom: var(--s-32);
+
+          .q {
+            display: inline-block;
+            margin-bottom: var(--s-16);
+
+            .gap {
+              padding: var(--s-4) var(--s-8);
+              margin: 0 var(--s-4);
+              background-color: var(--c-border-disabled);
+              color: transparent;
+              border-radius: var(--br-subtle);
+            }
+          }
+
+          .a {
+            display: flex;
+            flex-flow: row wrap;
+            gap: var(--s-8);
+
+            button {
+              font-size: var(--fs-p);
+              border: var(--bw-normal) var(--bs-normal) transparent;
+
+              &.revealed {
+                background-color: var(--c-area-neutral-active);
+                box-shadow: none;
+                pointer-events: none;
+
+                &.true {
+                  background-color: var(--c-area-success-active);
+                  border: var(--bw-normal) var(--bs-normal)
+                    var(--c-border-success);
+                  color: var(--c-label-success);
+                }
+
+                &.false {
+                  background-color: var(--c-area-error-active);
+                  border: var(--bw-normal) var(--bs-subtle)
+                    var(--c-border-error);
+                  color: var(--c-label-error);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /* * EX-FILL */
+  @layer ex-fill {
+    .ex-fill {
+      margin-top: var(--s-16);
+
+      ol {
+        list-style-type: decimal;
+        margin-left: var(--s-16);
+
+        li {
+          padding-left: var(--s-8);
+          margin-bottom: var(--s-16);
+          line-height: 3.5;
+
+          button {
+            display: inline-flex;
+            margin: 0 var(--s-4);
+            font-size: var(--fs-p);
+
+            span {
+              visibility: hidden;
+            }
+
+            &.revealed {
+              background-color: var(--c-area-neutral-active);
+              box-shadow: none;
+              pointer-events: none;
+
+              span {
+                visibility: visible;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /* * EX-FORMAT */
+  @layer ex-format {
+    .ex-format {
+      margin-top: var(--s-16);
+
+      ol {
+        list-style-type: decimal;
+        margin-left: var(--s-16);
+
+        li {
+          padding-left: var(--s-8);
+          margin-bottom: var(--s-16);
+          line-height: 3.5;
+
+          button {
+            display: inline-grid;
+            margin: 0 var(--s-4);
+            font-size: var(--fs-p);
+
+            span {
+              grid-column: 1;
+              grid-row: 1;
+
+              &.q {
+                visibility: visible;
+              }
+
+              &.a {
+                visibility: hidden;
+              }
+            }
+
+            &.revealed {
+              background-color: var(--c-area-neutral-active);
+              color: var(--c-label-neutral);
+              box-shadow: none;
+              pointer-events: none;
+
+              span {
+                &.q {
+                  visibility: hidden;
+                }
+
+                &.a {
+                  visibility: visible;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  /* * EX-ORDER */
+  @layer ex-order {
+  }
+  /* * EX-MATCH */
+  @layer ex-match {
+  }
+  /* * EX-MATCH-IMG */
+  @layer ex-match-img {
+  }
+  /* * EX-RATE */
+  @layer ex-rate {
+  }
+  /* * EX-VERIFY */
+  @layer ex-verify {
   }
 }
 

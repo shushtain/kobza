@@ -217,6 +217,61 @@
       "content": [
         {
           "type": "h3",
+          "content": "Choose the correct answer."
+        },
+        {
+          "type": "ex-choice",
+          "content": [
+            {
+              "q": "I || to Japan.",
+              "a": [
+                "have been",
+                "has been",
+                "were"
+              ]
+            },
+            {
+              "q": "She || here since 2019.",
+              "a": [
+                "has worked",
+                "worked",
+                "work"
+              ]
+            },
+            {
+              "q": "|| you ever || sushi?",
+              "a": [
+                "have, tried",
+                "has, tried",
+                "have, try"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "content": [
+        {
+          "type": "h3",
+          "content": "What's missing?"
+        },
+        {
+          "type": "ex-fill",
+          "content": [
+            "I |have never been| to Japan, but I |went| to China last year.",
+            "She |has worked| here since 2019, before that she |worked| in London.",
+            "|Have you ever tried| sushi? Yes, I |tried| it last month."
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "content": [
+        {
+          "type": "h3",
           "content": "Choose the correct tense."
         },
         {

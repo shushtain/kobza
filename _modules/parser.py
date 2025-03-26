@@ -732,15 +732,16 @@ def parse_ex_choice(content, scope, classes, id_, mod) -> html.Div:
             if i % 2 == 0:
                 q += elem
             else:
-                text = html.Span() + elem.strip()
-                q += html.Button(type="button") + text
+                q += html.Span(class_=["gap"]) + "___"
         task += q
 
         a = html.Div(class_=["a"])
-        a_elems = line["a"].split("|")
-        for i, elem in enumerate(a_elems):
-            text = html.Span() + elem.strip()
-            a += html.Button(type="button") + text
+        for i, option in enumerate(line["a"]):
+            text = html.Span() + option.strip()
+            button = html.Button(type="button") + text
+            if i == 0:
+                button.class_ = ["true"]
+            a += button
         task += a
 
         tasks += task
@@ -786,7 +787,7 @@ def parse_ex_format(content, scope, classes, id_, mod) -> html.Div:
                 if len(parts) == 2:
                     q = parts[0].strip()
                 a = parts[-1].strip()
-                tile = html.Button(type="button")
+                tile = html.Button(type="button", class_=["error"])
                 tile += html.Span(class_=["q"]) + q
                 tile += html.Span(class_=["a"]) + a
                 task += tile

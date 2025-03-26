@@ -162,6 +162,48 @@
         :::
             type :: h2
             content :: \\
+
+        :::
+            type :: section
+            content ::
+                :::
+                    type :: h3
+                    content :: Choose the correct answer.
+                :::
+                    type :: ex-choice
+                    content ::
+                        :::
+                            q :: I || to Japan.
+                            a ::
+                                have been
+                                has been
+                                were
+                        :::
+                            q :: She || here since 2019.
+                            a ::
+                                has worked
+                                worked
+                                work
+                        :::
+                            q :: || you ever || sushi?
+                            a ::
+                                have, tried
+                                has, tried
+                                have, try
+
+        :::
+            type :: section
+            content ::
+                :::
+                    type :: h3
+                    content :: What's missing?
+                :::
+                    type :: ex-fill
+                    content ::
+                        I |have never been| to Japan, but I |went| to China last year.
+                        She |has worked| here since 2019, before that she |worked| in London.
+                        |Have you ever tried| sushi? Yes, I |tried| it last month.
+
         :::
             type :: section
             content ::
@@ -177,18 +219,6 @@
                         They |move/moved| to Paris in 2020 and |live/have lived| there since then.
                         I |not finish/haven't finished| my report yet, but I |finish/finished| the research yesterday.
                         We |know/have known| each other for ten years, we |meet/met| at university.
-
-    :: break ::
-    ::     :::
-    ::         type :: h2
-    ::         content :: Is It About You?
-    ::     :::
-    ::         type :: ex-rate
-    ::         content ::
-    ::             I have been to other countries.
-    ::             I have been in South America for the last two years.
-    ::             I have already gone to school.
-    ::             I have gone outdoors many times.
 
     reading ::
         :::
