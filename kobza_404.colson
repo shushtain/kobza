@@ -6,7 +6,7 @@
     hero ::
         :::
             type :: h1
-            content :: Error 404:  The page is not found
+            content :: Error 404:  Page Not Found
         :::
             type :: p
-            content :: Have you found a broken link? Use the email below to tell us all about it.
+            content :: We apologize for the inconvenience. You can return to the [main page](~/). If you've found a broken link, please report it on [GitHub](https://github.com/shushtain/kobza).

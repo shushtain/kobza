@@ -103,7 +103,6 @@ def parse_head() -> html.Head:
     head += html.CommentHtml("Load scripts")
     head += html.Script(
         src=link(ROOT, "script.js"),
-        # defer=True,
     )
     if SCHEMA == "lesson":
         head += html.Script(
@@ -909,7 +908,7 @@ def parse_inline(line) -> str:
         href, target = parse_raw_link(href, target)
 
         sub = f"{html.A(href=href, target=target, title=title) + text}"
-        line = pattern_link.sub(sub, line)
+        line = pattern_link.sub(sub, line, count=1)
 
     return line
 
