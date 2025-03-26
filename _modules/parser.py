@@ -98,7 +98,7 @@ def parse_head() -> html.Head:
         media="(prefers-color-scheme: dark)",
         content="#0d0d0d",
     )
-    head += html.Meta(name="theme-color", content="#e6e6e6")
+    # head += html.Meta(name="theme-color", content="#e6e6e6")
 
     # Load styles
     head += html.CommentHtml("Load styles")
