@@ -88,16 +88,17 @@ def parse_head() -> html.Head:
     head += html.CommentHtml("Specify color scheme")
     head += html.Meta(name="color-scheme", content="light dark")
     # # and theme color for pwa
-    # head += html.Meta(
-    #     name="theme-color",
-    #     media="(prefers-color-scheme: light)",
-    #     content="#ea7482",
-    # )
-    # head += html.Meta(
-    #     name="theme-color",
-    #     # media="(prefers-color-scheme: dark)",
-    #     content="#932c38",
-    # )
+    head += html.Meta(name="theme-color", content="#e6e6e6")
+    head += html.Meta(
+        name="theme-color",
+        media="(prefers-color-scheme: light)",
+        content="#e6e6e6",
+    )
+    head += html.Meta(
+        name="theme-color",
+        media="(prefers-color-scheme: dark)",
+        content="#0d0d0d",
+    )
 
     # Load styles
     head += html.CommentHtml("Load styles")
