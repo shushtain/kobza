@@ -285,19 +285,21 @@ def generate_page(
 
     meta = data["meta"]
 
-    parser.PATH = path
-    parser.PATHS = paths
-    parser.SITEMAP = sitemap
-    parser.DATA = data
-    parser.FONTS = fonts
-    parser.VERSION = version
-    parser.WEBSITE = str(meta["book"]) if "book" in meta else ""
-    parser.LEVEL = str(meta["level"]).lower() if "level" in meta else ""
-    parser.UNIT = str(meta["unit"]) if "unit" in meta else ""
-    parser.LESSON = str(meta["lesson"]).lower() if "lesson" in meta else ""
-    parser.SCHEMA = str(meta["type"]).lower() if "type" in meta else ""
-    parser.ROOT = "/".join([".." for _ in path[:-1]])[:-1]  # ../../.
-    parser.ROOT_ABS = ROOT_ABS
+    parser.set_context(
+        path=path,
+        paths=paths,
+        sitemap=sitemap,
+        data=data,
+        fonts=fonts,
+        version=version,
+        website=str(meta["book"]) if "book" in meta else "",
+        level=str(meta["level"]).lower() if "level" in meta else "",
+        unit=str(meta["unit"]) if "unit" in meta else "",
+        lesson=str(meta["lesson"]).lower() if "lesson" in meta else "",
+        schema=str(meta["type"]).lower() if "type" in meta else "",
+        root="/".join([".." for _ in path[:-1]])[:-1],  # ../../.
+        root_abs=ROOT_ABS,
+    )
 
     file_name = "index.html"
 

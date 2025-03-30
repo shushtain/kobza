@@ -1,22 +1,41 @@
 """Parses Python objects into HTML, according to the recipes."""
 
 import re
+import threading
 
 import pyghtml as html
 
-PATH: list = []
-PATHS: list = []
-SITEMAP: dict = {}
-DATA: dict = {}
-FONTS: list = []
-VERSION: str = ""
-WEBSITE: str = ""
-LEVEL: str = ""
-UNIT: str = ""
-LESSON: str = ""
-SCHEMA: str = ""
-ROOT: str = ""
-ROOT_ABS: str = ""
+l = threading.local()
+
+
+def set_context(
+    path: list,
+    paths: list,
+    sitemap: dict,
+    data: dict,
+    fonts: list,
+    version: str,
+    website: str,
+    level: str,
+    unit: str,
+    lesson: str,
+    schema: str,
+    root: str,
+    root_abs: str,
+):
+    l.PATH = path
+    l.PATHS = paths
+    l.SITEMAP = sitemap
+    l.DATA = data
+    l.FONTS = fonts
+    l.VERSION = version
+    l.WEBSITE = website
+    l.LEVEL = level
+    l.UNIT = unit
+    l.LESSON = lesson
+    l.SCHEMA = schema
+    l.ROOT = root
+    l.ROOT_ABS = root_abs
 
 
 def parse_html() -> html.Html:
@@ -52,13 +71,13 @@ def parse_head() -> html.Head:
     head += html.Meta(property="og:type", content="website")
     head += html.Meta(
         property="og:url",
-        content=link(ROOT_ABS, *PATH[1:-1]),
+        content=link(l.ROOT_ABS, *l.PATH[1:-1]),
     )
     head += html.Meta(property="og:title", content=parse_title().inner_html)
     head += html.Meta(property="og:description", content=parse_description().content)
     head += html.Meta(
         property="og:image",
-        content=link(ROOT_ABS, "og-image.png"),
+        content=link(l.ROOT_ABS, "og-image.png"),
     )
 
     # Use the latest IE engine
@@ -67,10 +86,10 @@ def parse_head() -> html.Head:
 
     # Preload fonts
     head += html.CommentHtml("Preload fonts")
-    for font in FONTS:
+    for font in l.FONTS:
         head += html.Link(
             rel="preload",
-            href=link(ROOT, *font[1:]),
+            href=link(l.ROOT, *font[1:]),
             as_="font",
             type="font/woff2",
             crossorigin=True,
@@ -80,7 +99,7 @@ def parse_head() -> html.Head:
     head += html.CommentHtml("Preload font styles")
     head += html.Link(
         rel="preload",
-        href=link(ROOT, "fonts.css?ver=" + VERSION),
+        href=link(l.ROOT, "fonts.css?ver=" + l.VERSION),
         as_="style",
     )
 
@@ -104,21 +123,21 @@ def parse_head() -> html.Head:
     head += html.CommentHtml("Load styles")
     head += html.Link(
         rel="stylesheet",
-        href=link(ROOT, "fonts.css?ver=" + VERSION),
+        href=link(l.ROOT, "fonts.css?ver=" + l.VERSION),
     )
     head += html.Link(
         rel="stylesheet",
-        href=link(ROOT, "style.css?ver=" + VERSION),
+        href=link(l.ROOT, "style.css?ver=" + l.VERSION),
     )
 
     # Load scripts
     head += html.CommentHtml("Load scripts")
     head += html.Script(
-        src=link(ROOT, "script.js"),
+        src=link(l.ROOT, "script.js"),
     )
-    if SCHEMA == "lesson":
+    if l.SCHEMA == "lesson":
         head += html.Script(
-            src=link(ROOT, "script-lesson.js"),
+            src=link(l.ROOT, "script-lesson.js"),
             defer=True,
         )
 
@@ -127,24 +146,24 @@ def parse_head() -> html.Head:
     head += html.Link(
         rel="icon",
         sizes="192x192",
-        href=link(ROOT, "android-icon-192x192.png"),
+        href=link(l.ROOT, "android-icon-192x192.png"),
     )
     head += html.Link(
         rel="apple-touch-icon",
         sizes="180x180",
-        href=link(ROOT, "apple-icon-180x180.png"),
+        href=link(l.ROOT, "apple-icon-180x180.png"),
     )
     head += html.Link(
         rel="icon",
         sizes="96x96",
-        href=link(ROOT, "favicon-96x96.png"),
+        href=link(l.ROOT, "favicon-96x96.png"),
     )
 
     # Manifest
     head += html.CommentHtml("Manifest")
     head += html.Link(
         rel="manifest",
-        href=link(ROOT, "manifest.json"),
+        href=link(l.ROOT, "manifest.json"),
     )
 
     return head
@@ -157,23 +176,23 @@ def parse_title() -> html.Title:
     content = []
     sep = " • "
 
-    match SCHEMA:
+    match l.SCHEMA:
 
         case "main":
-            content.append(WEBSITE)
+            content.append(l.WEBSITE)
 
         case "404":
             content.append("404 NOT FOUND")
-            content.append(WEBSITE)
+            content.append(l.WEBSITE)
 
         case "level":
-            content.append(f"Level {LEVEL.upper()}")
-            content.append(WEBSITE)
+            content.append(f"Level {l.LEVEL.upper()}")
+            content.append(l.WEBSITE)
 
         case "lesson":
-            content.append(f"Lesson {UNIT}{LESSON.upper()}")
-            content.append(f"Level {LEVEL.upper()}")
-            content.append(WEBSITE)
+            content.append(f"Lesson {l.UNIT}{l.LESSON.upper()}")
+            content.append(f"Level {l.LEVEL.upper()}")
+            content.append(l.WEBSITE)
 
     title += sep.join(content)
 
@@ -187,25 +206,25 @@ def parse_description() -> html.Meta:
     content = []
     sep = " "
 
-    match SCHEMA:
+    match l.SCHEMA:
 
         case "main":
-            content.append(f"{WEBSITE}, open source English textbook.")
+            content.append(f"{l.WEBSITE}, open source English textbook.")
 
         case "404":
             content.append("ERROR 404.")
             content.append("The page is not found.")
 
         case "level":
-            content.append(f"{WEBSITE} {LEVEL.upper()}.")
-            content.append(f"{len(SITEMAP[LEVEL])} units.")
+            content.append(f"{l.WEBSITE} {l.LEVEL.upper()}.")
+            content.append(f"{len(l.SITEMAP[l.LEVEL])} units.")
 
         case "lesson":
             # content.append(f"{WEBSITE} {LEVEL.upper()}.")
             # content.append(f"Unit {UNIT}. Lesson {UNIT + LESSON.upper()}.")
-            topic = SITEMAP[LEVEL][UNIT][LESSON]["topic"]
-            grammar = SITEMAP[LEVEL][UNIT][LESSON]["grammar"]
-            vocabulary = SITEMAP[LEVEL][UNIT][LESSON]["vocabulary"]
+            topic = l.SITEMAP[l.LEVEL][l.UNIT][l.LESSON]["topic"]
+            grammar = l.SITEMAP[l.LEVEL][l.UNIT][l.LESSON]["grammar"]
+            vocabulary = l.SITEMAP[l.LEVEL][l.UNIT][l.LESSON]["vocabulary"]
             content.append(". ".join([topic, grammar, vocabulary]))
 
     description.content = sep.join(content)
@@ -236,17 +255,17 @@ def parse_header() -> html.Header:
     )
 
     nav += html.A(
-        href=link(ROOT),
+        href=link(l.ROOT),
         class_=["button", "accent"],
         aria_attrs={"aria-label": "Kobza Home"},
         inner_html=html.Span() + "Kobza",
     )
 
-    if SCHEMA == "lesson":
+    if l.SCHEMA == "lesson":
         nav += html.A(
-            href=link(ROOT, LEVEL),
+            href=link(l.ROOT, l.LEVEL),
             class_=["button"],
-            inner_html=html.Span() + LEVEL.upper(),
+            inner_html=html.Span() + l.LEVEL.upper(),
         )
 
     # color mode toggle
@@ -269,7 +288,7 @@ def parse_main() -> html.Main:
     """Main from the Body"""
     main = html.Main(id="main")
 
-    for key, value in DATA.items():
+    for key, value in l.DATA.items():
 
         if key == "meta":
             continue
@@ -291,24 +310,24 @@ def parse_footer() -> html.Footer:
     nav_next = html.A(class_=["button", "disabled"])
 
     # Secondary navigation
-    if SCHEMA == "lesson":
+    if l.SCHEMA == "lesson":
 
         lessons: list = []
-        for unit in SITEMAP[LEVEL]:
-            for lesson in SITEMAP[LEVEL][unit]:
+        for unit in l.SITEMAP[l.LEVEL]:
+            for lesson in l.SITEMAP[l.LEVEL][unit]:
                 lessons.append([unit, lesson])
 
-        lesson_prev_index = lessons.index([UNIT, LESSON]) - 1
-        lesson_next_index = lessons.index([UNIT, LESSON]) + 1
+        lesson_prev_index = lessons.index([l.UNIT, l.LESSON]) - 1
+        lesson_next_index = lessons.index([l.UNIT, l.LESSON]) + 1
 
         if lesson_prev_index >= 0:
             lesson_prev = lessons[lesson_prev_index]
             truncated = "".join(lesson_prev).upper()
-            lesson_prev_link = link(ROOT, LEVEL, "".join(lesson_prev))
+            lesson_prev_link = link(l.ROOT, l.LEVEL, "".join(lesson_prev))
             lesson_prev_text = ". ".join(
                 [
                     f"Lesson {truncated}",
-                    SITEMAP[LEVEL][lesson_prev[0]][lesson_prev[1]]["topic"],
+                    l.SITEMAP[l.LEVEL][lesson_prev[0]][lesson_prev[1]]["topic"],
                     # SITEMAP[LEVEL][lesson_prev[0]][lesson_prev[1]]["grammar"],
                     # SITEMAP[LEVEL][lesson_prev[0]][lesson_prev[1]]["vocabulary"],
                 ]
@@ -325,11 +344,11 @@ def parse_footer() -> html.Footer:
         if lesson_next_index < len(lessons):
             lesson_next = lessons[lesson_next_index]
             truncated = "".join(lesson_next).upper()
-            lesson_next_link = link(ROOT, LEVEL, "".join(lesson_next))
+            lesson_next_link = link(l.ROOT, l.LEVEL, "".join(lesson_next))
             lesson_next_text = ". ".join(
                 [
                     f"Lesson {truncated}",
-                    SITEMAP[LEVEL][lesson_next[0]][lesson_next[1]]["topic"],
+                    l.SITEMAP[l.LEVEL][lesson_next[0]][lesson_next[1]]["topic"],
                     # SITEMAP[LEVEL][lesson_next[0]][lesson_next[1]]["grammar"],
                     # SITEMAP[LEVEL][lesson_next[0]][lesson_next[1]]["vocabulary"],
                 ]
@@ -479,10 +498,10 @@ def parse_h1(content, scope, classes, id_, mod) -> html.H1:
     """Parse h1"""
     h1 = html.H1(class_=classes, id=id_)
 
-    match SCHEMA:
+    match l.SCHEMA:
 
         case "lesson":
-            h1 += html.Span() + f"Lesson {UNIT}{LESSON.upper()}:"
+            h1 += html.Span() + f"Lesson {l.UNIT}{l.LESSON.upper()}:"
             h1 += html.Br()
             h1 += f"{content}"
 
@@ -496,7 +515,7 @@ def parse_h2(content, scope, classes, id_, mod) -> html.H2:
     """Parse h2"""
     h2 = html.H2(class_=classes, id=id_)
 
-    match SCHEMA:
+    match l.SCHEMA:
 
         case "lesson":
             if content == "":
@@ -621,25 +640,25 @@ def parse_figure(content, scope, classes, id_, mod) -> html.Figure:
 def parse_toc(content, scope, classes, id_, mod) -> html.Div:
     """Parse Table of Contents"""
     toc = html.Div(class_=classes + ["toc"], id=id_)
-    toc.id = f"toc-{SCHEMA}" if id_ is None else id_
+    toc.id = f"toc-{l.SCHEMA}" if id_ is None else id_
 
-    match SCHEMA:
+    match l.SCHEMA:
 
         case "main":
-            for level in SITEMAP:
+            for level in l.SITEMAP:
                 card = html.A(
-                    href=link(ROOT, level),
+                    href=link(l.ROOT, level),
                     class_=["tile", level],
                 )
                 text = html.Span() + level.upper()
                 toc += card + text
 
         case "level":
-            for unit, lessons in SITEMAP[LEVEL].items():
+            for unit, lessons in l.SITEMAP[l.LEVEL].items():
                 ul = html.Ul()
                 for lesson, topics in lessons.items():
                     card = html.A(
-                        href=link(ROOT, LEVEL, unit + lesson),
+                        href=link(l.ROOT, l.LEVEL, unit + lesson),
                         class_=["button"],
                     )
                     text = html.Span() + ". ".join(
@@ -994,7 +1013,7 @@ def parse_raw_link(href, target="_blank"):
     """Parse raw link syntax"""
 
     if href[0] == "~" and "/" in href:
-        href = link(ROOT, *href.split("/")[1:])
+        href = link(l.ROOT, *href.split("/")[1:])
         target = "_self"
 
     return (href, target)
@@ -1022,7 +1041,7 @@ def link(*parts, as_is=False):
 
 def icon_link(icon_name: str):
     """Return a link to an icon"""
-    return link(ROOT, "icons", f"sprite.svg#{icon_name}")
+    return link(l.ROOT, "icons", f"sprite.svg#{icon_name}", as_is=True)
 
 
 def icon(icon_name: str, id_: str | None = None, classes: list[str] | None = None):
