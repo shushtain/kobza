@@ -504,8 +504,8 @@ ROOT
     --c-area-accent-active: light-dark(var(--_sw-p-20), var(--_sw-p-60));
     --c-border-accent: light-dark(var(--_sw-p-40), var(--_sw-p-60));
     --c-shadow-accent: light-dark(var(--_sw-p-10), var(--_sw-p-20));
-    --c-text-accent: light-dark(var(--_sw-p-95), var(--_sw-p-05));
-    --c-label-accent: light-dark(var(--_sw-p-90), var(--_sw-p-10));
+    --c-text-accent: light-dark(var(--_sw-p-95), var(--_sw-p-10));
+    --c-label-accent: light-dark(var(--_sw-p-95), var(--_sw-p-10));
 
     /* error */
     --c-area-error: light-dark(var(--_sw-e-99), var(--_sw-e-20));
@@ -632,7 +632,13 @@ PAGE
     flex-flow: row wrap;
     gap: var(--s-32);
     justify-content: space-between;
-    align-items: start;
+    align-items: center;
+
+    noscript {
+      font-size: var(--fs-l);
+      line-height: var(--lh-l);
+      color: var(--c-label-warning);
+    }
   }
 
   footer {
@@ -933,6 +939,7 @@ MOLECULES
       min-height: var(--s-48);
       /* visual */
       background-color: var(--c-area-neutral);
+      border: var(--bw-normal) var(--bs-normal) transparent;
       background-size: cover;
       background-position: center;
       border-radius: var(--br-normal);
@@ -940,7 +947,7 @@ MOLECULES
       color: var(--c-label-neutral);
       /* misc */
       transition: background-color var(--dur-0_1) ease-in-out,
-        box-shadow var(--dur-0_1) ease-in-out,
+        border var(--dur-0_1) ease-in-out, box-shadow var(--dur-0_1) ease-in-out,
         transform var(--dur-0_1) ease-in-out;
       cursor: pointer;
 
@@ -1208,24 +1215,26 @@ COMPONENTS
       margin-top: var(--s-16);
 
       & .controls {
-        display: flex;
+        display: none;
         flex-flow: row nowrap;
         gap: var(--s-8);
         align-items: center;
 
-        & .toggle-hide {
-          display: none;
-
-          .toggled & {
+        button {
+          .toggle-show {
             display: inline-block;
+
+            .toggled & {
+              display: none;
+            }
           }
-        }
 
-        & .toggle-show {
-          display: inline-block;
-
-          .toggled & {
+          .toggle-hide {
             display: none;
+
+            .toggled & {
+              display: inline-block;
+            }
           }
         }
       }
@@ -1310,7 +1319,6 @@ COMPONENTS
 
             button {
               font-size: var(--fs-p);
-              border: var(--bw-normal) var(--bs-normal) transparent;
 
               &.revealed {
                 background-color: var(--c-area-neutral-active);
@@ -1339,8 +1347,8 @@ COMPONENTS
   }
 
   /* * EX-FILL */
-  @layer ex-fill {
-    .ex-fill {
+  @layer ex-gaps {
+    .ex-gaps {
       margin-top: var(--s-16);
 
       ol {
@@ -1429,20 +1437,309 @@ COMPONENTS
       }
     }
   }
+
+  /* ! CHECK */
   /* * EX-ORDER */
   @layer ex-order {
+    .ex-order {
+      margin-top: var(--s-16);
+
+      ol {
+        list-style-type: decimal;
+        margin-left: 1em;
+
+        li {
+          padding-left: var(--s-16);
+          margin-bottom: var(--s-16);
+          line-height: 3.5;
+
+          button {
+            display: inline-grid;
+            margin: 0 var(--s-4);
+            font-size: var(--fs-p);
+          }
+
+          &.correct {
+            button {
+              background-color: var(--c-area-success-active);
+              color: var(--c-label-success);
+              box-shadow: none;
+              pointer-events: none;
+            }
+          }
+        }
+      }
+    }
   }
-  /* * EX-MATCH */
-  @layer ex-match {
+
+  /* * EX-PLOT */
+  @layer ex-plot {
   }
-  /* * EX-MATCH-IMG */
-  @layer ex-match-img {
+
+  /* ! CHECK */
+  /* * EX-PREF */
+  @layer ex-pref {
+    .ex-pref {
+      display: grid;
+      grid-template-columns: repeat(
+        auto-fill,
+        minmax(min(var(--s-128), 100%), 1fr)
+      );
+      grid-auto-rows: 1fr;
+      gap: var(--s-16);
+      justify-content: stretch;
+      align-items: stretch;
+
+      .task {
+        width: 100%;
+
+        .box {
+          width: 100%;
+          max-width: none;
+          aspect-ratio: 1;
+
+          &.revealed {
+            background-color: var(--c-area-neutral-active);
+            box-shadow: none;
+
+            &.dislike {
+              background-color: var(--c-area-error-active);
+              color: var(--c-label-error);
+              border: var(--bw-normal) var(--bs-normal) var(--c-border-error);
+            }
+
+            &.like {
+              background-color: var(--c-area-success-active);
+              color: var(--c-label-success);
+              border: var(--bw-normal) var(--bs-normal) var(--c-border-success);
+            }
+          }
+
+          span {
+            font-size: var(--fs-p);
+          }
+        }
+
+        dialog {
+          &[open] {
+            opacity: 0;
+            display: flex;
+            flex-flow: column nowrap;
+            align-items: stretch;
+            justify-content: stretch;
+            background-color: var(--c-background);
+            border-radius: var(--br-normal);
+            box-shadow: var(--sh-coords-rest) var(--c-shadow-neutral);
+            width: clamp(var(--s-128), 25rem, 80vw);
+            max-height: 80vh;
+            overflow: auto;
+            margin: auto;
+            transition: opacity var(--dur-0_1) ease-in-out;
+
+            &::backdrop {
+              opacity: 0;
+              backdrop-filter: blur(var(--s-16)) brightness(0.5) grayscale(1);
+              transition: opacity var(--dur-0_1) ease-in-out;
+            }
+
+            &.open {
+              opacity: 1;
+
+              &::backdrop {
+                opacity: 1;
+              }
+            }
+
+            .wrapper {
+              flex: 1;
+              display: flex;
+              flex-flow: column nowrap;
+              align-items: center;
+              gap: var(--s-16);
+              padding: var(--s-16-32);
+
+              .text {
+                flex: 1;
+                padding: var(--s-32) 0;
+                text-align: center;
+                overflow: auto;
+              }
+
+              .close {
+                order: -1;
+              }
+
+              .buttons {
+                width: 100%;
+                display: flex;
+                flex-flow: row nowrap;
+                gap: var(--s-8);
+                justify-content: stretch;
+
+                button {
+                  flex: 1;
+                  max-width: none;
+
+                  &.revealed {
+                    background-color: var(--c-area-neutral-active);
+                    color: var(--c-label-neutral);
+                    box-shadow: none;
+                    pointer-events: none;
+
+                    &.selected.error {
+                      background-color: var(--c-area-error-active);
+                      border: var(--bw-normal) var(--bs-normal)
+                        var(--c-border-error);
+                      color: var(--c-label-error);
+                    }
+
+                    &.selected.success {
+                      background-color: var(--c-area-success-active);
+                      border: var(--bw-normal) var(--bs-normal)
+                        var(--c-border-success);
+                      color: var(--c-label-success);
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
-  /* * EX-RATE */
-  @layer ex-rate {
-  }
-  /* * EX-VERIFY */
-  @layer ex-verify {
+
+  /* ! CHECK */
+  /* * EX-FACTS */
+  @layer ex-facts {
+    .ex-facts {
+      display: grid;
+      grid-template-columns: repeat(
+        auto-fill,
+        minmax(min(var(--s-128), 100%), 1fr)
+      );
+      grid-auto-rows: 1fr;
+      gap: var(--s-16);
+      justify-content: stretch;
+      align-items: stretch;
+
+      .task {
+        width: 100%;
+
+        .box {
+          width: 100%;
+          max-width: none;
+          aspect-ratio: 1;
+
+          &.revealed {
+            background-color: var(--c-area-neutral-active);
+            box-shadow: none;
+
+            &.false {
+              background-color: var(--c-area-error-active);
+              color: var(--c-label-error);
+              border: var(--bw-normal) var(--bs-subtle) var(--c-border-error);
+            }
+
+            &.true {
+              background-color: var(--c-area-success-active);
+              color: var(--c-label-success);
+              border: var(--bw-normal) var(--bs-normal) var(--c-border-success);
+            }
+          }
+
+          span {
+            font-size: var(--fs-p);
+          }
+        }
+
+        dialog {
+          &[open] {
+            opacity: 0;
+            display: flex;
+            flex-flow: column nowrap;
+            align-items: stretch;
+            justify-content: stretch;
+            background-color: var(--c-background);
+            border-radius: var(--br-normal);
+            box-shadow: var(--sh-coords-rest) var(--c-shadow-neutral);
+            width: clamp(var(--s-128), 25rem, 80vw);
+            max-height: 80vh;
+            overflow: auto;
+            margin: auto;
+            transition: opacity var(--dur-0_1) ease-in-out;
+
+            &::backdrop {
+              opacity: 0;
+              backdrop-filter: blur(var(--s-16)) brightness(0.5) grayscale(1);
+              transition: opacity var(--dur-0_1) ease-in-out;
+            }
+
+            &.open {
+              opacity: 1;
+
+              &::backdrop {
+                opacity: 1;
+              }
+            }
+
+            .wrapper {
+              flex: 1;
+              display: flex;
+              flex-flow: column nowrap;
+              align-items: center;
+              gap: var(--s-16);
+              padding: var(--s-16-32);
+
+              .text {
+                flex: 1;
+                padding: var(--s-32) 0;
+                text-align: center;
+                overflow: auto;
+              }
+
+              .close {
+                order: -1;
+              }
+
+              .buttons {
+                width: 100%;
+                display: flex;
+                flex-flow: row nowrap;
+                gap: var(--s-8);
+                justify-content: stretch;
+
+                button {
+                  flex: 1;
+                  max-width: none;
+
+                  &.revealed {
+                    background-color: var(--c-area-neutral-active);
+                    color: var(--c-label-neutral);
+                    box-shadow: none;
+                    pointer-events: none;
+
+                    &.false {
+                      background-color: var(--c-area-error-active);
+                      border: var(--bw-normal) var(--bs-subtle)
+                        var(--c-border-error);
+                      color: var(--c-label-error);
+                    }
+
+                    &.true {
+                      background-color: var(--c-area-success-active);
+                      border: var(--bw-normal) var(--bs-normal)
+                        var(--c-border-success);
+                      color: var(--c-label-success);
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }
 
@@ -1490,6 +1787,10 @@ UTILITIES
   /* * TOGGLE THEME */
 
   @layer toggle-theme {
+    #toggle-theme {
+      display: none;
+    }
+
     #toggle-light {
       [data-theme="light"] & {
         display: none;

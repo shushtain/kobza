@@ -87,7 +87,7 @@ def parse_head() -> html.Head:
     # Specify color scheme
     head += html.CommentHtml("Specify color scheme")
     head += html.Meta(name="color-scheme", content="light dark")
-    # # and theme color for pwa
+    # and theme color for pwa
     head += html.Meta(
         name="theme-color",
         media="(prefers-color-scheme: light)",
@@ -255,14 +255,11 @@ def parse_header() -> html.Header:
         id="toggle-theme",
         aria_attrs={"aria-label": "Toggle theme"},
     )
-    toggle_theme += html.Svg(class_=["icon"], id="toggle-light") + html.Use(
-        href=icon("light-mode")
-    )
-    toggle_theme += html.Svg(class_=["icon"], id="toggle-dark") + html.Use(
-        href=icon("dark-mode")
-    )
+    toggle_theme += icon("light-mode", "toggle-light")
+    toggle_theme += icon("dark-mode", "toggle-dark")
 
     header += nav
+    header += html.Noscript() + "Some features require JavaScript."
     header += toggle_theme
 
     return header
@@ -321,7 +318,7 @@ def parse_footer() -> html.Footer:
                 class_=["button", "prev"],
                 aria_attrs={"aria-label": "Previous lesson"},
             )
-            nav_prev += html.Svg(class_=["icon"]) + html.Use(href=icon("arrow-left"))
+            nav_prev += icon("arrow-left")
             nav_prev += html.Span(class_=["long"]) + lesson_prev_text
             nav_prev += html.Span(class_=["short"]) + truncated
 
@@ -344,14 +341,14 @@ def parse_footer() -> html.Footer:
             )
             nav_next += html.Span(class_=["long"]) + lesson_next_text
             nav_next += html.Span(class_=["short"]) + truncated
-            nav_next += html.Svg(class_=["icon"]) + html.Use(href=icon("arrow-right"))
+            nav_next += icon("arrow-right")
 
     nav_up = html.A(
         href="#",
         class_=["button", "up"],
         aria_attrs={"aria-label": "To the top"},
     )
-    nav_up += html.Svg(class_=["icon"]) + html.Use(href=icon("arrow-up"))
+    nav_up += icon("arrow-up")
 
     nav += nav_prev
     nav += nav_up
@@ -427,7 +424,7 @@ def parse_block(block, scope):
             case "aside":
                 return parse_aside(*package)
             case "---":
-                return html.Hr()
+                return html.Hr(class_=classes, id=id_)
             case "ul":
                 return parse_ul(*package)
             case "ol":
@@ -444,20 +441,18 @@ def parse_block(block, scope):
                 return parse_flashcards(*package)
             case "ex-choice":
                 return parse_ex_choice(*package)
-            case "ex-fill":
-                return parse_ex_fill(*package)
+            case "ex-gaps":
+                return parse_ex_gaps(*package)
             case "ex-format":
                 return parse_ex_format(*package)
             case "ex-order":
                 return parse_ex_order(*package)
-            case "ex-match":
-                return parse_ex_match(*package)
-            case "ex-match-img":
-                return parse_ex_match_img(*package)
-            case "ex-rate":
-                return parse_ex_rate(*package)
-            case "ex-verify":
-                return parse_ex_verify(*package)
+            case "ex-plot":
+                return parse_ex_plot(*package)
+            case "ex-pref":
+                return parse_ex_pref(*package)
+            case "ex-facts":
+                return parse_ex_facts(*package)
 
             # unknown types
             case _:
@@ -591,9 +586,9 @@ def parse_cta(content, scope, classes, id_, mod) -> html.A:
     target = content["target"] if "target" in content else target
 
     if "mail" in classes or "mailto:" in href:
-        cta += html.Svg(class_=["icon"]) + html.Use(href=icon("mail"))
+        cta += icon("mail")
     elif "file" in classes:
-        cta += html.Svg(class_=["icon"]) + html.Use(href=icon("file"))
+        cta += icon("file")
 
     cta.href = href
     cta.title = title
@@ -601,9 +596,9 @@ def parse_cta(content, scope, classes, id_, mod) -> html.A:
     cta += html.Span() + text
 
     if "download" in classes:
-        cta += html.Svg(class_=["icon"]) + html.Use(href=icon("download"))
+        cta += icon("download")
     elif "more" in classes:
-        cta += html.Svg(class_=["icon"]) + html.Use(href=icon("arrow-right"))
+        cta += icon("arrow-right")
 
     return cta
 
@@ -616,9 +611,9 @@ def parse_figure(content, scope, classes, id_, mod) -> html.Figure:
     alt = content["alt"] if "alt" in content else ""
     figure += html.Img(src=src, alt=alt)
 
-    if "figcaption" in content:
-        figcaption = parse_inline(content["figcaption"])
-        figure += html.Figcaption(class_=["subtle"]) + figcaption
+    if "caption" in content:
+        caption = parse_inline(content["caption"])
+        figure += html.Figcaption(class_=["subtle"]) + caption
 
     return figure
 
@@ -676,12 +671,8 @@ def parse_flashcards(content, scope, classes, id_, mod) -> html.Div:
     toggle_flashcards = html.Button(
         type="button", class_=["button", "toggle-flashcards"]
     )
-    toggle_flashcards += html.Svg(class_=["icon", "toggle-show"]) + html.Use(
-        href=icon("show")
-    )
-    toggle_flashcards += html.Svg(class_=["icon", "toggle-hide"]) + html.Use(
-        href=icon("hide")
-    )
+    toggle_flashcards += icon("show", classes=["toggle-show"])
+    toggle_flashcards += icon("hide", classes=["toggle-hide"])
     toggle_flashcards += html.Span() + "Show answers"
     flashcards_controls += toggle_flashcards
 
@@ -724,35 +715,48 @@ def parse_ex_choice(content, scope, classes, id_, mod) -> html.Div:
     tasks = html.Ol(class_=["tasks"])
 
     for line in content:
-        task = html.Li(class_=["task"])
-
-        q = html.Div(class_=["q"])
-        q_elems = line["q"].split("|")
-        for i, elem in enumerate(q_elems):
-            if i % 2 == 0:
-                q += elem
+        if isinstance(line, str):
+            task = html.Li(class_=["task", "no-shuffle"])
+            q = html.Div(class_=["q"])
+            a = html.Div(class_=["a"])
+            q += line[1:].strip()
+            true = html.Button(type="button") + (html.Span() + "True")
+            false = html.Button(type="button") + (html.Span() + "False")
+            if line[0] == "+":
+                true.class_ = ["true"]
             else:
-                q += html.Span(class_=["gap"]) + "___"
+                false.class_ = ["true"]
+            a += true
+            a += false
+        else:
+            task = html.Li(class_=["task"])
+            q = html.Div(class_=["q"])
+            a = html.Div(class_=["a"])
+            q_elems = line["q"].split("|")
+            for i, elem in enumerate(q_elems):
+                if i % 2 == 0:
+                    q += elem
+                else:
+                    q += html.Span(class_=["gap"]) + "___"
+
+            for i, option in enumerate(line["a"]):
+                text = html.Span() + option.strip()
+                button = html.Button(type="button") + text
+                if i == 0:
+                    button.class_ = ["true"]
+                a += button
+
         task += q
-
-        a = html.Div(class_=["a"])
-        for i, option in enumerate(line["a"]):
-            text = html.Span() + option.strip()
-            button = html.Button(type="button") + text
-            if i == 0:
-                button.class_ = ["true"]
-            a += button
         task += a
-
         tasks += task
 
     ex_choice += tasks
     return ex_choice
 
 
-def parse_ex_fill(content, scope, classes, id_, mod) -> html.Div:
-    """Parse ex-fill"""
-    ex_fill = html.Div(class_=classes + ["exercise", "ex-fill"], id=id_)
+def parse_ex_gaps(content, scope, classes, id_, mod) -> html.Div:
+    """Parse ex-gaps"""
+    ex_gaps = html.Div(class_=classes + ["exercise", "ex-gaps"], id=id_)
     tasks = html.Ol(class_=["tasks"])
 
     for line in content:
@@ -766,8 +770,8 @@ def parse_ex_fill(content, scope, classes, id_, mod) -> html.Div:
                 task += html.Button(type="button") + text
         tasks += task
 
-    ex_fill += tasks
-    return ex_fill
+    ex_gaps += tasks
+    return ex_gaps
 
 
 def parse_ex_format(content, scope, classes, id_, mod) -> html.Div:
@@ -814,58 +818,105 @@ def parse_ex_order(content, scope, classes, id_, mod) -> html.Div:
     return ex_order
 
 
-def parse_ex_match(content, scope, classes, id_, mod) -> html.Div:
-    """Parse ex-match"""
-    ex_match = html.Div(class_=classes + ["exercise", "ex-match"], id=id_)
-    task = html.Ol(class_=["task"])
-    ref = html.Ol(class_=["ref"])
+# ! Unfinished
+def parse_ex_plot(content, scope, classes, id_, mod) -> html.Div:
+    """Parse ex-plot"""
+    ex_plot = html.Div(class_=classes + ["exercise", "ex-plot"], id=id_)
+    # task = html.Div(class_=["task"])
+    # ref = html.Ol(class_=["ref"])
 
-    for line in content:
-        q = html.Li()
-        text = html.Span() + line["q"]
-        q += html.Button(type="button", class_=["draggable"]) + text
-        task += q
+    # for line in content:
+    #     text = html.Span() + line["q"]
+    #     q = html.Button(type="button", class_=["draggable"]) + text
+    #     task += q
 
-        a = html.Li()
-        a += html.Span() + line["a"]
-        ref += a
+    #     a = html.Li()
+    #     a += html.Span() + line["a"]
+    #     ref += a
 
-    ex_match += task + ref
-    return ex_match
+    # ex_plot += task + ref
+    return ex_plot
 
 
-def parse_ex_match_img(content, scope, classes, id_, mod) -> html.Div:
-    """Parse ex-match-img"""
-    ex_match_img = html.Div(class_=classes + ["exercise", "ex-match-img"], id=id_)
-    task = html.Ol(class_=["task"])
-    ref = html.Ol(class_=["ref"])
+def parse_ex_pref(content, scope, classes, id_, mod) -> html.Div:
+    """Parse ex-pref"""
+    ex_pref = html.Div(class_=classes + ["exercise", "ex-pref"], id=id_)
 
-    for line in content:
-        q = html.Li()
-        text = html.Span() + line["text"]
-        q += html.Button(type="button", class_=["draggable"]) + text
-        task += q
+    for i, line in enumerate(content):
+        task = html.Div(class_=["task"])
+        box = html.Button(type="button", class_=["box"]) + (html.Span() + (i + 1))
+        dialog = html.Dialog(tabindex="-1")
+        modal = html.Div(class_=["wrapper"])
 
-        a = html.Li()
-        src = link(ROOT, line["img"])
-        alt = line["alt"] if "alt" in line else ""
-        a += html.Img(src=src, alt=alt)
-        ref += a
+        if isinstance(line, str):
+            modal += html.Div(class_=["text"]) + line
+        else:
+            img_link = line["img"] if "img" in line else None
+            img_alt = line["alt"] if "alt" in line else ""
+            modal += html.Img(src=img_link, alt=img_alt)
+            modal += html.Div(class_=["text"]) + line["text"]
 
-    ex_match_img += task + ref
-    return ex_match_img
+        dislike = html.Button(type="button", class_=["dislike", "error"]) + icon(
+            "thumb-down"
+        )
+        like = html.Button(type="button", class_=["like", "success"]) + icon("thumb-up")
+        buttons = html.Div(class_=["buttons"]) + dislike + like
+        modal += buttons
+
+        modal += html.Button(type="button", class_=["close"]) + icon("close")
+
+        dialog += modal
+
+        task += box
+        task += dialog
+
+        ex_pref += task
+
+    return ex_pref
 
 
 # ! UNFINISHED
-def parse_ex_rate(content, scope, classes, id_, mod) -> html.Div:
-    """Parse ex-rate"""
-    return html.Div()
+def parse_ex_facts(content, scope, classes, id_, mod) -> html.Div:
+    """Parse ex-facts"""
+    ex_facts = html.Div(class_=classes + ["exercise", "ex-facts"], id=id_)
 
+    for i, line in enumerate(content):
+        task = html.Div(class_=["task"])
+        box = html.Button(type="button", class_=["box"]) + (html.Span() + (i + 1))
+        dialog = html.Dialog(tabindex="-1")
+        modal = html.Div(class_=["wrapper"])
 
-# ! UNFINISHED
-def parse_ex_verify(content, scope, classes, id_, mod) -> html.Div:
-    """Parse ex-verify"""
-    return html.Div()
+        if isinstance(line, str):
+            modal += html.Div(class_=["text"]) + line[1:].strip()
+            check = line[0] == "+"
+        else:
+            img_link = line["img"] if "img" in line else None
+            img_alt = line["alt"] if "alt" in line else ""
+            check = line["a"]
+            modal += html.Img(src=img_link, alt=img_alt)
+            modal += html.Div(class_=["text"]) + line["text"]
+
+        false = html.Button(type="button") + "False"
+        true = html.Button(type="button") + "True"
+
+        if check:
+            true.class_ = ["true"]
+        else:
+            false.class_ = ["true"]
+
+        buttons = html.Div(class_=["buttons"]) + false + true
+        modal += buttons
+
+        modal += html.Button(type="button", class_=["close"]) + icon("close")
+
+        dialog += modal
+
+        task += box
+        task += dialog
+
+        ex_facts += task
+
+    return ex_facts
 
 
 def parse_inline(line) -> str:
@@ -969,7 +1020,14 @@ def link(*parts, as_is=False):
     return "/".join(parts) + ("/" if is_directory else "")
 
 
-def icon(icon_name: str):
+def icon_link(icon_name: str):
     """Return a link to an icon"""
-
     return link(ROOT, "icons", f"sprite.svg#{icon_name}")
+
+
+def icon(icon_name: str, id_: str | None = None, classes: list[str] | None = None):
+    """Return an icon"""
+    svg = html.Svg(class_=["icon"] + (classes if classes else []), id=id_)
+    use = html.Use(href=icon_link(icon_name))
+    svg += use
+    return f"\n{svg}\n"

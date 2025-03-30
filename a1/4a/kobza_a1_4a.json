@@ -258,7 +258,7 @@
           "content": "What's missing?"
         },
         {
-          "type": "ex-fill",
+          "type": "ex-gaps",
           "content": [
             "I |have never been| to Japan, but I |went| to China last year.",
             "She |has worked| here since 2019, before that she |worked| in London.",
@@ -315,18 +315,11 @@
       "type": "---"
     },
     {
-      "type": "ul",
+      "type": "ex-choice",
       "content": [
-        "When did Sarah start her career in tech?",
-        "When did she decide to change her career?",
-        "What did she decide to do?",
-        "When did she complete her certification?",
-        "When did she have her first interview?",
-        "Has she found a teaching position yet?",
-        "Has she met other professionals who have made similar career changes?",
-        "When did some of them switch to teaching?",
-        "How did they feel about their decision?",
-        "Has Sarah regretted her choice?"
+        "+ Sarah changed careers.",
+        "- Sarah has started to work as a cook.",
+        "+ Sarah's career started in 2008."
       ]
     }
   ],
@@ -336,7 +329,7 @@
       "content": ""
     },
     {
-      "type": "ex-rate",
+      "type": "ex-pref",
       "content": [
         "Have you ever traveled abroad?",
         "Have you ever tried exotic food?",
@@ -359,8 +352,21 @@
       "content": ""
     },
     {
-      "type": "p",
-      "content": "Nothing for now."
+      "type": "ex-facts",
+      "content": [
+        "+ Have you ever traveled abroad?",
+        "- Have you ever tried exotic food?",
+        "+ Have you ever learned a new language?",
+        "- Have you ever won a competition?",
+        "+ Have you ever met a celebrity?",
+        "- Have you ever been in a TV show or movie?",
+        "- Have you ever written a book or article?",
+        "+ Have you ever started your own business?",
+        "- Have you ever volunteered for a cause?",
+        "+ Have you ever run a marathon?",
+        "- Have you ever lived in another country?",
+        "+ Have you ever given a public speech?"
+      ]
     }
   ]
 }

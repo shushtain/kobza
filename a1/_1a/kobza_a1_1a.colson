@@ -114,7 +114,7 @@
                     type :: h3
                     content :: Complete the sentences.
                 :::
-                    type :: ex-fill
+                    type :: ex-gaps
                     content ::
                         Are you a teacher? — Yes, I |am|.
                         |Are| we free now? — Yes, go.
@@ -144,7 +144,7 @@
                     type :: h3
                     content :: Find matches.
                 :::
-                    type :: ex-match-img
+                    type :: ex-plot
                     content ::
                         :::
                             text :: Hello

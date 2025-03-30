@@ -30,6 +30,7 @@ if (!root.hasAttribute("data-theme")) {
 document.addEventListener("DOMContentLoaded", () => {
   // Set up theme toggle
   const toggleTheme = document.getElementById("toggle-theme");
+  toggleTheme.style.display = "flex";
   toggleTheme.addEventListener("click", () => {
     const currentTheme = root.getAttribute("data-theme");
     const newTheme = currentTheme === "light" ? "dark" : "light";
