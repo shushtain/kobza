@@ -1,7 +1,7 @@
 User-agent: *
 Disallow: /404.html
 Disallow: /.gitignore
-Disallow: /*.columnson
+Disallow: /*.colson
 Disallow: /.vscode/
 Disallow: /.git/
 Disallow: /.mypy_cache/

@@ -401,7 +401,7 @@ function initExFacts() {
       dialog.showModal();
       setTimeout(() => {
         dialog.classList.add("open");
-      }, dur02);
+      }, dur01);
       box.classList.add("revealed");
     });
 
@@ -410,7 +410,7 @@ function initExFacts() {
       dialog.classList.remove("open");
       setTimeout(() => {
         dialog.close();
-      }, dur02);
+      }, dur01);
     });
 
     // Close on click outside
@@ -419,7 +419,7 @@ function initExFacts() {
         dialog.classList.remove("open");
         setTimeout(() => {
           dialog.close();
-        }, dur02);
+        }, dur01);
       }
     });
 

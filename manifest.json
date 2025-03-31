@@ -4,26 +4,16 @@
   "description": "Open Source English Course",
   "categories": ["education"],
   "start_url": "/kobza/",
+  "id": "kobza",
+  "display_override": ["standalone", "minimum-ui", "browser"],
   "display": "standalone",
   "background_color": "#e6e6e6",
   "icons": [
     {
       "src": "kobza-logo-512x512.svg",
-      "sizes": "512x512",
+      "sizes": "any",
       "type": "image/svg+xml",
-      "purpose": "monochrome maskable"
-    },
-    {
-      "src": "kobza-logo-512x512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "monochrome maskable"
-    },
-    {
-      "src": "kobza-logo-512x512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "monochrome"
+      "purpose": "maskable"
     },
     {
       "src": "kobza-logo-512x512.png",
@@ -32,7 +22,25 @@
       "purpose": "maskable"
     },
     {
-      "src": "kobza-logo-512x512.png",
+      "src": "kobza-mono-512x512.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "monochrome"
+    },
+    {
+      "src": "kobza-mono-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "monochrome"
+    },
+    {
+      "src": "kobza-icon-512x512.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "kobza-icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"

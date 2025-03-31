@@ -220,6 +220,28 @@
                         I |not finish/haven't finished| my report yet, but I |finish/finished| the research yesterday.
                         We |know/have known| each other for ten years, we |meet/met| at university.
 
+        :::
+            type :: section
+            content ::
+                :::
+                    type :: h3
+                    content :: Task 3
+                :::
+                    type :: label
+                    content :: Order the words to form sentences.
+                :::
+                    type :: note
+                    content :: Pay attention to the word order.
+                :::
+                    type :: ex-order
+                    content ::
+                        I | am | not | ten | years | old
+                        we | are | from | the | Netherlands
+                        you | are | my | best | friends
+                        I | 'm | not | South | Asian
+                        we | all | are | free | today
+                        aren't | you | a | good | boy?
+
     reading ::
         :::
             type :: h2
@@ -253,7 +275,9 @@
             type :: ex-pref
             content ::
                 Have you ever traveled abroad?
-                Have you ever tried exotic food?
+                :::
+                    text :: Have you ever tried exotic food?
+                    img :: \\
                 Have you ever learned a new language?
                 Have you ever won a competition?
                 Have you ever met a celebrity?

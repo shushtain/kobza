@@ -3,7 +3,7 @@
 A free and open-source ESL course.
 
 > ⚠️ **Pre-alpha**  
-> Currently, there are no actual lessons, only a functioning parser.
+> Need to make pages with actual content.
 
 ## The Idea
 
@@ -18,10 +18,10 @@ As an English teacher from Ukraine, the main obstacle to working independently h
 
 - [x] Parse JSON lessons into web pages
 - [x] Interactive exercises
-- [ ] Proper styling
 - [x] Vocabulary flashcards
-- [ ] Interactive tests
+- [x] Proper styling
 - [ ] Warmup activities
+- [ ] Interactive tests
 
 ## Ways to Help
 
@@ -39,5 +39,7 @@ I aim to parse lessons from the most accessible and convenient format.
 - `YAML` doesn't handle inline Markdown well.
 
 For now, I've developed my own [ColSON syntax](https://github.com/shushtain/colson-vscode) and [ColSON parser](https://github.com/shushtain/colson-pip). These handle the special files you might have spotted in the repository. They are essentially `.txt` files parsed line-by-line into Python objects, which are then converted into appropriate HTML elements using recipes in `parser.py`.
+
+If you wish to help me create lessons, you can provide them in any format.
 
 <!-- ## Resources -->

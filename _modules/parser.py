@@ -23,6 +23,7 @@ def set_context(
     root: str,
     root_abs: str,
 ):
+    """Set constants for the current thread"""
     l.PATH = path
     l.PATHS = paths
     l.SITEMAP = sitemap
@@ -452,6 +453,10 @@ def parse_block(block, scope):
                 return parse_cta(*package)
             case "figure":
                 return parse_figure(*package)
+            case "label":
+                return parse_label(*package)
+            case "note":
+                return parse_note(*package)
 
             # special
             case "toc":
@@ -635,6 +640,20 @@ def parse_figure(content, scope, classes, id_, mod) -> html.Figure:
         figure += html.Figcaption(class_=["subtle"]) + caption
 
     return figure
+
+
+def parse_label(content, scope, classes, id_, mod) -> html.P:
+    """Parse label"""
+    label = html.P(class_=["label"] + classes, id=id_)
+    label += parse_inline(content)
+    return label
+
+
+def parse_note(content, scope, classes, id_, mod) -> html.P:
+    """Parse note"""
+    note = html.P(class_=["note"] + classes, id=id_)
+    note += parse_inline(content)
+    return note
 
 
 def parse_toc(content, scope, classes, id_, mod) -> html.Div:
