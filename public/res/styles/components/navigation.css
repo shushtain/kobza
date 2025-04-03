@@ -1,0 +1,40 @@
+nav {
+  /* layout */
+  display: flex;
+  flex-flow: row wrap;
+  gap: var(--s-8);
+  justify-content: stretch;
+
+  footer & {
+    width: 100%;
+
+    & a.button {
+      flex: 1;
+      max-width: none;
+
+      & span {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        &.short {
+          display: none;
+        }
+
+        @media (max-width: 30em) {
+          &.long {
+            display: none;
+          }
+          &.short {
+            display: inline-block;
+          }
+        }
+      }
+
+      &:nth-child(2) {
+        width: fit-content;
+        flex: 0 0 auto;
+      }
+    }
+  }
+}

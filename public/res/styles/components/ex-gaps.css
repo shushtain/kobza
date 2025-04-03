@@ -1,0 +1,34 @@
+.ex-gaps {
+  margin-top: var(--s-16);
+
+  ol {
+    list-style-type: decimal;
+    margin-left: 1em;
+
+    li {
+      padding-left: var(--s-12);
+      margin-bottom: var(--s-16);
+      line-height: 3.7;
+
+      button {
+        display: inline-flex;
+        margin: 0 var(--s-4);
+        font-size: var(--fs-p);
+
+        span {
+          visibility: hidden;
+        }
+
+        &.revealed {
+          background-color: var(--c-area-neutral-active);
+          box-shadow: none;
+          pointer-events: none;
+
+          span {
+            visibility: visible;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+#toggle-theme {
+  display: none;
+}
+
+#toggle-light {
+  [data-theme="light"] & {
+    display: none;
+  }
+}
+
+#toggle-dark {
+  [data-theme="dark"] & {
+    display: none;
+  }
+}

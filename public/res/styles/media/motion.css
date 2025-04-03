@@ -1,0 +1,28 @@
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  :root {
+    /* mute transitions */
+    --dur-0_1: 0s;
+    --dur-0_2: 0s;
+    --dur-0_3: 0s;
+    --dur-0_4: 0s;
+    --dur-0_5: 0s;
+    --dur-0_6: 0s;
+    --dur-0_7: 0s;
+    --dur-0_8: 0s;
+    --dur-0_9: 0s;
+    --dur-1_0: 0s;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}

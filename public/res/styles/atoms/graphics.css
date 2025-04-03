@@ -1,0 +1,40 @@
+figure {
+  /* layout */
+  display: flex;
+  flex-flow: column nowrap;
+  gap: var(--s-8);
+}
+
+figcaption {
+  /* text */
+  font-size: var(--fs-l);
+  font-style: italic;
+  line-height: var(--lh-l);
+}
+
+img,
+picture,
+video,
+canvas {
+  width: 100%;
+  /* visual */
+  border-radius: var(--br-normal);
+  background-color: var(--c-area-neutral-hover);
+  object-fit: cover;
+}
+
+hr {
+  /* visual */
+  border: var(--bw-subtle) var(--bs-subtle) var(--c-border-neutral);
+  margin: var(--s-8) 0;
+}
+
+svg.icon {
+  /* layout */
+  display: inline-block;
+  width: var(--s-20);
+  height: var(--s-20);
+  overflow: visible;
+  /* visual */
+  fill: currentColor;
+}

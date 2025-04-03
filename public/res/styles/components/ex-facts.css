@@ -1,0 +1,132 @@
+.ex-facts {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(min(var(--s-128), 100%), 1fr)
+  );
+  grid-auto-rows: 1fr;
+  gap: var(--s-16);
+  justify-content: stretch;
+  align-items: stretch;
+
+  .task {
+    width: 100%;
+
+    .box {
+      width: 100%;
+      max-width: none;
+      aspect-ratio: 1;
+
+      &.revealed {
+        background-color: var(--c-area-neutral-active);
+
+        &.false {
+          box-shadow: none;
+          background-color: var(--c-area-error-active);
+          color: var(--c-label-error);
+          border: var(--bw-normal) var(--bs-subtle) var(--c-border-error);
+        }
+
+        &.true {
+          box-shadow: none;
+          background-color: var(--c-area-success-active);
+          color: var(--c-label-success);
+          border: var(--bw-normal) var(--bs-normal) var(--c-border-success);
+        }
+      }
+
+      span {
+        font-size: var(--fs-p);
+      }
+    }
+
+    dialog {
+      &[open] {
+        opacity: 0;
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: stretch;
+        justify-content: stretch;
+        background-color: var(--c-background);
+        border-radius: var(--br-normal);
+        box-shadow: var(--sh-coords-rest) var(--c-shadow-neutral);
+        width: clamp(var(--s-128), 25rem, 80vw);
+        max-height: 80vh;
+        overflow: auto;
+        margin: auto;
+        transition: opacity var(--dur-0_1) ease-in-out;
+
+        &::backdrop {
+          opacity: 0;
+          backdrop-filter: blur(var(--s-16)) brightness(0.5) grayscale(1);
+          transition: opacity var(--dur-0_1) ease-in-out;
+        }
+
+        &.open {
+          opacity: 1;
+
+          &::backdrop {
+            opacity: 1;
+          }
+        }
+
+        .wrapper {
+          flex: 1;
+          display: flex;
+          flex-flow: column nowrap;
+          align-items: center;
+          gap: var(--s-32);
+          padding: var(--s-16-32);
+
+          .close {
+            order: -1;
+          }
+
+          img {
+            flex: 1;
+          }
+
+          .text {
+            flex: 1;
+            text-align: center;
+            overflow: auto;
+          }
+
+          .buttons {
+            width: 100%;
+            display: flex;
+            flex-flow: row nowrap;
+            gap: var(--s-8);
+            justify-content: stretch;
+
+            button {
+              flex: 1;
+              max-width: none;
+
+              &.revealed {
+                background-color: var(--c-area-neutral-active);
+                color: var(--c-label-neutral);
+                box-shadow: none;
+                pointer-events: none;
+
+                &.false {
+                  background-color: var(--c-area-error-active);
+                  border: var(--bw-normal) var(--bs-subtle)
+                    var(--c-border-error);
+                  color: var(--c-label-error);
+                }
+
+                &.true {
+                  background-color: var(--c-area-success-active);
+                  border: var(--bw-normal) var(--bs-normal)
+                    var(--c-border-success);
+                  color: var(--c-label-success);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

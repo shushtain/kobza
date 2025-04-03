@@ -1,0 +1,8 @@
+User-agent: *
+Disallow: /404.html
+Disallow: /.gitignore
+Disallow: /*.colson
+Disallow: /.vscode/
+Disallow: /.git/
+Disallow: /.mypy_cache/
+Disallow: /builder/

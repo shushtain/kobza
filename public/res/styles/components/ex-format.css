@@ -1,0 +1,50 @@
+.ex-format {
+  margin-top: var(--s-16);
+
+  ol {
+    list-style-type: decimal;
+    margin-left: 1em;
+
+    li {
+      padding-left: var(--s-16);
+      margin-bottom: var(--s-16);
+      line-height: 3.7;
+
+      button {
+        display: inline-grid;
+        margin: 0 var(--s-4);
+        font-size: var(--fs-p);
+
+        span {
+          grid-column: 1;
+          grid-row: 1;
+
+          &.q {
+            visibility: visible;
+          }
+
+          &.a {
+            visibility: hidden;
+          }
+        }
+
+        &.revealed {
+          background-color: var(--c-area-neutral-active);
+          color: var(--c-label-neutral);
+          box-shadow: none;
+          pointer-events: none;
+
+          span {
+            &.q {
+              visibility: hidden;
+            }
+
+            &.a {
+              visibility: visible;
+            }
+          }
+        }
+      }
+    }
+  }
+}

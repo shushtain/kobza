@@ -1,0 +1,37 @@
+button,
+.button {
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+  max-width: fit-content;
+  gap: var(--s-8);
+  padding: var(--s-12) var(--s-16);
+  /* text */
+  font-size: var(--fs-l);
+  font-weight: var(--fw-l);
+  line-height: var(--lh-l);
+  letter-spacing: var(--ls-l);
+
+  &:has(span):has(svg) {
+    justify-content: space-between;
+  }
+
+  &:not(:has(span)) {
+    padding: var(--s-12);
+  }
+
+  & span {
+    margin: var(--s-4) 0;
+  }
+  &.accent {
+    font-weight: var(--fw-h);
+  }
+}
+
+.button span::before {
+  margin-right: var(--s-8);
+}
+
+.button span::after {
+  margin-left: var(--s-8);
+}

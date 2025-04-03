@@ -1,0 +1,10 @@
+.disabled {
+  /* visual */
+  background-color: var(--c-area-disabled);
+  border: var(--bw-subtle) var(--bs-normal) var(--c-border-disabled);
+  box-shadow: none;
+  color: var(--c-text-disabled);
+  filter: grayscale(100%);
+  /* misc */
+  pointer-events: none;
+}

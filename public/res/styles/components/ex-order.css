@@ -1,0 +1,29 @@
+.ex-order {
+  margin-top: var(--s-16);
+
+  ol {
+    list-style-type: decimal;
+    margin-left: 1em;
+
+    li {
+      padding-left: var(--s-16);
+      margin-bottom: var(--s-16);
+      line-height: 3.7;
+
+      button {
+        display: inline-grid;
+        margin: 0 var(--s-4);
+        font-size: var(--fs-p);
+      }
+
+      &.correct {
+        button {
+          background-color: var(--c-area-success-active);
+          color: var(--c-label-success);
+          box-shadow: none;
+          pointer-events: none;
+        }
+      }
+    }
+  }
+}

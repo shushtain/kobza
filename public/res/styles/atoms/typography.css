@@ -1,0 +1,87 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  max-width: var(--ll);
+  /* text */
+  font-weight: var(--fw-h);
+  letter-spacing: var(--ls-h);
+  text-wrap: var(--tw-h);
+  word-wrap: break-word;
+}
+
+h1 {
+  /* text */
+  font-size: var(--fs-h1);
+  line-height: var(--lh-h1);
+  margin-bottom: var(--s-16);
+}
+
+h2 {
+  /* text */
+  font-size: var(--fs-h2);
+  line-height: var(--lh-h2);
+  margin-bottom: var(--s-16);
+}
+
+h3 {
+  /* text */
+  font-size: var(--fs-h3);
+  line-height: var(--lh-h3);
+}
+
+h4 {
+  /* text */
+  font-size: var(--fs-h4);
+  line-height: var(--lh-h4);
+}
+
+p {
+  /* layout */
+  max-width: var(--ll);
+  /* text */
+  text-wrap: var(--tw-p);
+  /* misc */
+}
+
+strong {
+  /* text */
+  font-weight: var(--fw-h);
+}
+
+em {
+  /* text */
+  font-style: italic;
+}
+
+mark {
+  /* visual */
+  background-color: var(--c-area-warning-active);
+  color: var(--c-text-warning);
+  /* text */
+  padding: var(--s-1) var(--s-4);
+  white-space: break-spaces;
+  border-radius: var(--br-subtle);
+}
+
+small {
+  /* text */
+  font-size: var(--fs-l);
+}
+
+.note {
+  font-size: var(--fs-l);
+  line-height: var(--lh-l);
+  font-style: italic;
+}
+
+.label + .note {
+  margin-top: calc(var(--s-12) * -1);
+}
+
+.label {
+  font-style: italic;
+  font-weight: var(--fw-h);
+}

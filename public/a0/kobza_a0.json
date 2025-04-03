@@ -1,0 +1,26 @@
+{
+  "meta": {
+    "book": "Kobza",
+    "type": "level",
+    "level": "A0"
+  },
+  "hero": [
+    {
+      "type": "h1",
+      "content": "Kobza A0"
+    },
+    {
+      "type": "p",
+      "content": "Level A0 (Starter) teaches alphabet, numbers, and basic vocabulary."
+    }
+  ],
+  "toc": [
+    {
+      "type": "h2",
+      "content": "Table of Contents"
+    },
+    {
+      "type": "toc"
+    }
+  ]
+}

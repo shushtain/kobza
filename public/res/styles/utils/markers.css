@@ -1,0 +1,16 @@
+::marker {
+  color: var(--c-label-neutral);
+  font-size: var(--fs-l);
+}
+.error ::marker {
+  color: var(--c-label-error);
+}
+.warning ::marker {
+  color: var(--c-label-warning);
+}
+.info ::marker {
+  color: var(--c-label-info);
+}
+.success ::marker {
+  color: var(--c-label-success);
+}

@@ -1,0 +1,310 @@
+:::
+    meta :::
+        book :: Kobza
+        type :: lesson
+        level :: A0
+        unit :: 1
+        lesson :: A
+
+    hero ::
+        :::
+            type :: h1
+            content :: Life Experiences
+        :::
+            type :: p
+            content :: In this lesson, we learn to distinguish between Past Simple and Present Perfect tenses. You'll understand when to use each tense and practice using them in real-life situations.
+
+    warmup ::
+        :::
+            type :: h2
+            content :: Events and Experiences
+        :::
+            type :: figure
+            content :::
+                img :: \\
+                alt :: Collage of events and experiences
+        :::
+            type :: ul
+            content ::
+                What events do you see? When did you have them?
+                What life experiences do you see? Have you ever had them?
+
+    vocabulary ::
+        :::
+            type :: h2
+            content :: Time and Experience Expressions
+        :::
+            type :: flashcards
+            content ::
+                :::
+                    q :: already
+                    a :: something happened sooner than expected
+                    img :: \\
+                :::
+                    q :: yet
+                    a :: used in questions and negatives about recent events
+                    img :: hello.jpg
+                :::
+                    q :: just
+                    a :: very recently, a moment ago
+                    img :: hello.jpg
+                :::
+                    q :: ever
+                    a :: at any time (in questions and negatives)
+                    img :: \\
+                :::
+                    q :: never
+                    a :: at no time, not ever
+                    img :: hello.jpg
+                :::
+                    q :: lately
+                    a :: recently, in the recent past
+                    img :: hello.jpg
+                :::
+                    q :: since
+                    a :: from a specific point in time until now
+                    img :: hello.jpg
+                :::
+                    q :: for
+                    a ::
+                        during a period of time
+                        "for ten years"
+                    img :: \\
+                :::
+                    q :: ago
+                    a ::
+                        counting back from now
+                        "a year ago"
+                    img :: \\
+                :::
+                    q :: been in
+                    a :: lived/worked in a place
+                    img :: \\
+                :::
+                    q :: been to
+                    a :: visited and returned
+                    img :: \\
+                :::
+                    q :: gone to
+                    a :: went and still there
+                    img :: \\
+
+    grammar ::
+        :::
+            type :: h2
+            content :: Past Simple vs Present Perfect
+        :::
+            type :: p
+            content :: Both tenses are used to talk about events that started in the past. The difference is in how they connect to the present.
+        :::
+            type :: section
+            content ::
+                :::
+                    type :: h3
+                    content :: Past Simple
+                :::
+                    type :: p
+                    content :: We use Past Simple for actions that happened at a specific time in the past and have no influence on the present.
+                :::
+                    type :: aside
+                    class :: info
+                    content :: Time expressions: yesterday, last week, in 2020.
+                :::
+                    type :: p
+                    content :: Examples:
+                :::
+                    type :: aside
+                    class :: success
+                    content ::
+                        :::
+                            type :: ul
+                            content ::
+                                I was in Paris last summer.
+                                She graduated in 2020.
+                                They moved here two years ago.
+        :::
+            type :: section
+            content ::
+                :::
+                    type :: h3
+                    content :: Present Perfect
+                :::
+                    type :: p
+                    content :: We use Present Perfect for:
+                :::
+                    type :: ul
+                    content ::
+                        Actions with present relevance.
+                        Lifetime experiences.
+                        Continuing actions.
+                :::
+                    type :: p
+                    content :: Time expressions:
+                :::
+                    type :: aside
+                    class :: info
+                    content :: already, yet, just, ever, never, since, for.
+                :::
+                    type :: p
+                    content :: Examples:
+                :::
+                    type :: aside
+                    class :: error
+                    content ::
+                        :::
+                            type :: ul
+                            content ::
+                                She has just graduated.
+                                I have been to Paris.
+                                I have been in Spain since 2019.
+
+    practice ::
+        :::
+            type :: h2
+            content :: \\
+
+        :::
+            type :: section
+            content ::
+                :::
+                    type :: h3
+                    content :: Choose the correct answer.
+                :::
+                    type :: ex-choice
+                    content ::
+                        :::
+                            q :: I || to Japan.
+                            a ::
+                                have been
+                                has been
+                                were
+                        :::
+                            q :: She || here since 2019.
+                            a ::
+                                has worked
+                                worked
+                                work
+                        :::
+                            q :: || you ever || sushi?
+                            a ::
+                                have, tried
+                                has, tried
+                                have, try
+
+        :::
+            type :: section
+            content ::
+                :::
+                    type :: h3
+                    content :: What's missing?
+                :::
+                    type :: ex-gaps
+                    content ::
+                        I |have never been| to Japan, but I |went| to China last year.
+                        She |has worked| here since 2019, before that she |worked| in London.
+                        |Have you ever tried| sushi? Yes, I |tried| it last month.
+
+        :::
+            type :: section
+            content ::
+                :::
+                    type :: h3
+                    content :: Choose the correct tense.
+                :::
+                    type :: ex-format
+                    content ::
+                        I |never be/have never been| to Japan, but I |go/went| to China last year.
+                        She |work/has worked| here since 2019, before that she |work/worked| in London.
+                        |you ever try/Have you ever tried| sushi? Yes, I |try/tried| it last month.
+                        They |move/moved| to Paris in 2020 and |live/have lived| there since then.
+                        I |not finish/haven't finished| my report yet, but I |finish/finished| the research yesterday.
+                        We |know/have known| each other for ten years, we |meet/met| at university.
+
+        :::
+            type :: section
+            content ::
+                :::
+                    type :: h3
+                    content :: Task 3
+                :::
+                    type :: label
+                    content :: Order the words to form sentences.
+                :::
+                    type :: note
+                    content :: Pay attention to the word order.
+                :::
+                    type :: ex-order
+                    content ::
+                        I | am | not | ten | years | old
+                        we | are | from | the | Netherlands
+                        you | are | my | best | friends
+                        I | 'm | not | South | Asian
+                        we | all | are | free | today
+                        aren't | you | a | good | boy?
+
+    reading ::
+        :::
+            type :: h2
+            content :: A Career Change
+        :::
+            type :: p
+            content ::
+                I have worked in the tech industry for fifteen years. My career started in 2008 when I joined a small startup as a junior developer. Since then, I have had several different roles at various companies. Three years ago, I decided to make a major change in my career. I have always been interested in teaching, so I enrolled in a teaching certification program.
+        :::
+            type :: p
+            content ::
+                I have just completed my certification, and I haven't found a teaching position yet, but I have already applied to several schools. Last week, I had my first interview, and it went really well. The school principal told me they have never hired someone with my background before, but they were impressed by my technical skills.
+        :::
+            type :: p
+            content ::
+                Since I started this journey, I have met many other professionals who have made similar career changes. Some of them switched to teaching last year, and they have been very happy with their decision. I haven't regretted my choice for a moment, even though I left a well-paying job in tech.
+        :::
+            type :: ---
+        :::
+            type :: ex-choice
+            content ::
+                + Sarah changed careers.
+                - Sarah has started to work as a cook.
+                + Sarah's career started in 2008.
+
+    speaking ::
+        :::
+            type :: h2
+            content :: \\
+        :::
+            type :: ex-pref
+            content ::
+                Have you ever traveled abroad?
+                :::
+                    text :: Have you ever tried exotic food?
+                    img :: \\
+                Have you ever learned a new language?
+                Have you ever won a competition?
+                Have you ever met a celebrity?
+                Have you ever been in a TV show or movie?
+                Have you ever written a book or article?
+                Have you ever started your own business?
+                Have you ever volunteered for a cause?
+                Have you ever run a marathon?
+                Have you ever lived in another country?
+                Have you ever given a public speech?
+
+    homework ::
+        :::
+            type :: h2
+            content :: \\
+        :::
+            type :: ex-facts
+            content ::
+                + Have you ever traveled abroad?
+                - Have you ever tried exotic food?
+                + Have you ever learned a new language?
+                - Have you ever won a competition?
+                + Have you ever met a celebrity?
+                - Have you ever been in a TV show or movie?
+                - Have you ever written a book or article?
+                + Have you ever started your own business?
+                - Have you ever volunteered for a cause?
+                + Have you ever run a marathon?
+                - Have you ever lived in another country?
+                + Have you ever given a public speech?

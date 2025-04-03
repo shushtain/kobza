@@ -1,0 +1,9 @@
+.draggable {
+  /* misc */
+  cursor: grab;
+}
+
+.draggable:active {
+  /* misc */
+  cursor: grabbing;
+}

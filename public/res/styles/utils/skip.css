@@ -1,0 +1,20 @@
+.skip {
+  /* position */
+  position: absolute;
+  left: -9999px;
+  overflow: hidden;
+  /* layout */
+  width: 1px;
+  height: 1px;
+  /* misc */
+}
+
+.button.skip:focus {
+  /* position */
+  position: static;
+  overflow: auto;
+  /* layout */
+  width: auto;
+  height: auto;
+  /* misc */
+}

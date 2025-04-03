@@ -1,0 +1,30 @@
+section > ul,
+section > ol,
+blockquote > ul,
+blockquote > ol,
+aside > ul,
+aside > ol {
+  /* layout */
+  margin-left: var(--s-16);
+  display: flex;
+  flex-flow: column nowrap;
+  gap: var(--s-4);
+  /* text */
+  line-height: var(--lh-h4);
+}
+
+section > ul,
+section > ol {
+  margin: var(--s-8) 0 var(--s-8) var(--s-16);
+}
+
+section > ul,
+blockquote > ul,
+aside > ul {
+  list-style-type: disc;
+}
+
+section > ol,
+blockquote > ol {
+  list-style-type: decimal;
+}

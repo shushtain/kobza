@@ -1,0 +1,64 @@
+{
+  "name": "Kobza",
+  "short_name": "Kobza",
+  "description": "Open Source English Course",
+  "categories": ["education"],
+  "start_url": "/kobza/",
+  "id": "kobza",
+  "display_override": ["standalone", "minimum-ui", "browser"],
+  "display": "standalone",
+  "background_color": "#e6e6e6",
+  "icons": [
+    {
+      "src": "res/icons/kobza-logo-512x512.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    },
+    {
+      "src": "res/icons/kobza-logo-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "res/icons/kobza-mono-512x512.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "monochrome"
+    },
+    {
+      "src": "res/icons/kobza-mono-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "monochrome"
+    },
+    {
+      "src": "res/icons/kobza-icon-512x512.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "res/icons/kobza-icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "res/icons/kobza-icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "res/icons/kobza-icon-180x180.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "res/icons/kobza-icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+a:not(.button, .tile) {
+  /* visual */
+  color: var(--c-text-tone);
+  text-decoration: underline;
+  white-space: break-spaces;
+  border-radius: var(--br-subtle);
+  /* misc */
+  transition: color var(--dur-0_1) ease-in-out;
+  cursor: pointer;
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: var(--c-label-tone);
+  }
+
+  &:focus-visible {
+    text-decoration: none;
+  }
+
+  &:active {
+    text-decoration-style: dotted;
+  }
+}
