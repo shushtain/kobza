@@ -45,25 +45,25 @@
     color: var(--c-text-neutral);
 
     &.a0 {
-      background-image: url(/a0/a0.png);
+      background-image: url(https://shushtain.github.io/kobza/a0/a0.png);
     }
     &.a1 {
-      background-image: url(/a1/a1.png);
+      background-image: url(https://shushtain.github.io/kobza/a1/a1.png);
     }
     &.a2 {
-      background-image: url(/a2/a2.png);
+      background-image: url(https://shushtain.github.io/kobza/a2/a2.png);
     }
     &.b1 {
-      background-image: url(/b1/b1.png);
+      background-image: url(https://shushtain.github.io/kobza/b1/b1.png);
     }
     &.b2 {
-      background-image: url(/b2/b2.png);
+      background-image: url(https://shushtain.github.io/kobza/b2/b2.png);
     }
     &.c1 {
-      background-image: url(/c1/c1.png);
+      background-image: url(https://shushtain.github.io/kobza/c1/c1.png);
     }
     &.c2 {
-      background-image: url(/c2/c2.png);
+      background-image: url(https://shushtain.github.io/kobza/c2/c2.png);
     }
   }
 }
