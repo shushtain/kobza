@@ -5,4 +5,4 @@ Disallow: /*.colson
 Disallow: /.vscode/
 Disallow: /.git/
 Disallow: /.mypy_cache/
-Disallow: /builder/
+Disallow: /modules/

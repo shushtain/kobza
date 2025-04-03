@@ -14,7 +14,7 @@ from modules import cli, sitemap, generator, utils
 SEP = os.path.sep
 URL = "https://shushtain.github.io/kobza"
 PATHS = {
-    "public": ["public"],
+    "public": ["."],
     "fonts": ["res", "fonts"],
     "styles": ["res", "styles"],
     "scripts": ["res", "scripts"],
@@ -97,7 +97,7 @@ async def main() -> None:
     progress.print()
 
     async def generate_with_semaphore(
-        path, data, site_map, lang, version, fonts, url, paths, npx_path, index, total
+        path, data, site_map, lang, version, fonts, url, paths, npx_path, index
     ):
         async with semaphore:
             new_path = await asyncio.to_thread(
@@ -130,7 +130,6 @@ async def main() -> None:
             paths=PATHS,
             npx_path=npx_path,
             index=i,
-            total=len(paths),
         )
         for i, path in enumerate(paths)
     ]
