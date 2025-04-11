@@ -44,7 +44,7 @@ def parse() -> html.Head:
     )
     head += html.Meta(
         property="og:image",
-        content=link(ctx.url, *ctx.paths["images"], "og-image.png"),
+        content=link(ctx.url, *ctx.paths["images"], "kobza-og.png"),
     )
 
     # Use the latest IE engine
